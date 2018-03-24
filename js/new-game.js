@@ -58,7 +58,7 @@ function newGame() {
     draw(obstacles, "obstacle", 0);
 
 
-    // Monter le plateau
+    // Montrer le plateau
 
     $("#end-mask").fadeOut();
 
