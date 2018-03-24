@@ -1,0 +1,194 @@
+/* 
+
+    #board-container : conteneur du plateau de jeu
+    #board-elts : plateau de jeu
+    .square : case du plateau
+    .obstacle : obstacle sur une case
+    .player : icone du joueur sur le plateau
+    .weapon : icone d'une arme sur le plateau
+    .shield : icone d'un bouclier sur le plateau
+    .reach : case accessible par le joueur
+    .reach-fight : case accessible par le joueur et enclenchant un combat
+
+*/
+
+/*----------| CONTAINER : BOARD */
+
+#board-container {
+    height: 738px;
+    padding: 60px;
+    background-color: rgba(235, 235, 235, 1);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+#board-elts {
+    display: grid;
+    grid-template-columns: repeat(10, 60px);
+    grid-gap: 2px;
+    height: 618px;
+    margin: auto;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.35);
+}
+
+/*----------| POSITIONS */
+
+.square {
+    position: relative;
+}
+
+.obstacle,
+.player,
+.weapon,
+.shield,
+.reach,
+.reach-fight {
+    position: absolute;
+}
+
+/*----------| SIZES AND OFFSET */
+
+.square,
+.obstacle,
+.reach,
+.reach-fight {
+    width: 60px;
+    height: 60px;
+}
+
+.player {
+    width: 50px;
+    height: 50px;
+    top: 5px;
+    left: 5px;
+}
+
+.weapon,
+.shield {
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 10px;
+}
+
+/*----------| BACKGROUND COLORS */
+
+.weapon {
+    background-color: rgba(73, 10, 61, 1);
+}
+
+.shield {
+    background-color: rgba(37, 49, 81, 1);
+}
+
+.reach {
+    background-color: rgb(255, 255, 255);
+}
+
+.reach-fight {
+    background-color: rgb(200, 40, 40);
+}
+
+/*----------| BACKGROUND IMAGES */
+
+.square {
+    background-image: url("../img/square.png");
+}
+
+.obstacle {
+    background-image: url("../img/obstacle.png");
+}
+
+.weapon,
+.shield {
+    /* Images définies en Javascript */
+}
+
+/*----------| BACKGROUND SIZE */
+
+.square,
+.obstacle {
+    background-size: 60px 60px;
+}
+
+.player {
+    background-size: 50px 50px;
+}
+
+.weapon,
+.shield {
+    background-size: 20px 20px;
+}
+
+/*----------| OPACITIES */
+
+.reach,
+.reach-fight {
+    opacity: 0.35
+}
+
+.reach:hover,
+.reach-fight:hover {
+    opacity: 0.55;
+}
+
+.reach:focus,
+.reach-fight:focus {
+    opacity: 0.75;
+}
+
+/*----------| BORDERS */
+
+.player {
+    border-radius: 50%;
+}
+
+.weapon,
+.shield {
+    border-radius: 50%;
+}
+
+.reach,
+reach-fight {
+    border: 3px;
+    border-style: outset;
+}
+
+.reach {
+    border-color: rgb(255, 255, 255);
+}
+
+.reach-fight {
+    border-color: rgb(200, 40, 40);
+}
+
+/*----------| SHADOWS */
+
+.player {
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+/*----------| TEXTS */
+
+.weapon,
+.shield {
+    text-align: center;
+    line-height: 40px;
+    font-size: 1em;
+    color: rgb(255, 255, 255);
+}
+
+/*----------| INDEXES */
+
+.player {
+    z-index: 4;
+}
+
+.weapon,
+.shield {
+    z-index: 2;
+}
+
+.reach,
+reach-fight {
+    z-index: 1;
+}

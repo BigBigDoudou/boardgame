@@ -1,0 +1,197 @@
+/* 
+
+    #player1 : panneau du joueur 1
+    #player2 : panneau du joueur 2
+    .player-img : icône du joueur
+    .player-hp : points de vie
+    .player-hp-wrapper : conteneur de la barre de points de vie
+    .player-hp-bar : bar de points de vie restant
+    .player-hp-back : arrière de la barre de points de vie
+    .player-items : conteneur des équipements du joueur
+    .player-weapon : conteneur de l'arme
+    .player-shield : conteneur du bouclier
+    .player-weapon-img : icône de l'arme
+    .player-shield-img: icône du bouclier
+    .player-weapon-attack : dégâts de l'arme
+    .player-shield-defense : défense du bouclier
+
+*/
+
+/*----------| CONTENEUR : INFORMATIONS JOUEURS */
+
+#player1,
+#player2 {
+    align-self: start;
+    width: 168px;
+    margin-top: 150px;
+    padding: 20px;
+    background-color: rgba(215, 215, 215, 1);
+    text-align: center;
+    z-index: -1;
+}
+
+#player1 {
+    justify-self: end;
+}
+
+#player2 {
+    justify-self: start;
+}
+
+/*----------| DISPLAYS */
+
+.player-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+.player-hp,
+.player-weapon-img,
+.player-shield-img {
+    display: block;
+}
+
+/*----------| POSITIONS */
+
+.player-hp-wrapper {
+    position: relative;
+}
+
+.player-hp-bar,
+.player-hp-back {
+    position: absolute;
+}
+
+/*----------| MARGINS */
+
+.player-items {
+    margin-top: 20px;
+}
+
+.player-weapon-attack,
+.player-shield-defense {
+    margin-top: 10px;
+}
+
+.player-weapon {
+    margin-right: 5px;
+}
+
+.player-shield {
+    margin-left: 5px;
+}
+
+.player-weapon-img,
+.player-shield-img {
+    margin: auto;
+}
+
+/*----------| PADDINGS */
+
+.player-weapon,
+.player-shield {
+    padding: 10px;
+}
+
+/*----------| SIZES AND OFFSETS */
+
+.player-weapon,
+.player-shield {
+    width: 60px;
+    height: 100px;
+}
+
+.player-hp-wrapper {
+    height: 60px;
+}
+
+.player-hp-back,
+.player-hp-bar {
+    width: 128px;
+    height: 20px;
+}
+
+.player-items {
+    width: 100%;
+}
+
+.player-weapon-img,
+.player-shield-img {
+    width: 40px;
+    height: 40px;
+}
+
+/*----------| BACKGROUND COLORS */
+
+.player-hp-back {
+    background-color: rgb(200, 200, 200);
+}
+
+#player1 .player-hp-bar {
+    background-color: rgb(200, 50, 50);
+}
+
+#player2 .player-hp-bar {
+    background-color: rgb(50, 50, 200);
+}
+
+.player-weapon {
+    background-color: rgba(73, 10, 61, 1);
+}
+
+.player-shield {
+    background-color: rgba(37, 49, 81, 1);
+}
+
+/*----------| BORDERS */
+
+#board .player-img {
+    border-radius: 50%;
+}
+
+#player1 .player-weapon,
+#player1 .player-shield {
+    border-color: rgb(200, 50, 50);
+}
+
+#player2 .player-weapon,
+#player2 .player-shield {
+    border-color: rgb(50, 50, 200);
+}
+
+/*----------| TEXTS */
+
+.player-hp {
+    line-height: 40px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#player1 .player-hp {
+    color: rgb(200, 50, 50);
+}
+
+#player2 .player-hp {
+    color: rgb(50, 50, 200);
+}
+
+.player-weapon-attack,
+.player-shield-defense {
+    color: rgb(255, 255, 255);
+}
+
+.player-weapon-attack,
+.player-shield-defense {
+    line-height: 30px;
+}
+
+/*----------| INDEXES */
+
+.player-hp-back {
+    z-index: 1;
+}
+
+.player-hp-bar {
+    z-index: 2;
+}

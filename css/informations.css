@@ -1,0 +1,52 @@
+/* 
+
+    #informations : panneau latéral d'informations sur le jeu
+    #informations > span : titre du panneau et bouton toggle d'ouverture/fermeture
+    #informations > hr : ligne sous le titre
+    #informations-toggle : bouton toggle d'ouverture/fermeture
+    #informations-logs p : informations affichées dans le panneau
+
+*/
+
+#informations {
+    position: fixed;
+    top: 20px;
+    bottom: 20px;
+    width: 250px;
+    padding: 40px 20px;
+    background-color: rgba(25, 25, 25, 1);
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5) inset;
+}
+
+#informations > span {
+    display: inline-block;
+    float: left;
+    line-height: 20px;
+    font-size: 1em;
+    color: rgb(200, 200, 200);
+}
+
+#informations > hr {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#informations-toggle {
+    display: inline-block;
+    float: right;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/menu-toggle-left.png);
+    background-size: 15px 15px;
+    cursor: pointer;
+}
+
+#informations-toggle:hover {
+    background-size: 20px 20px;
+}
+
+#informations-logs p {
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    color: rgb(150, 150, 150);
+}

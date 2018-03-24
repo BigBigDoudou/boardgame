@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jeu de plateau</title>
+    <link rel="icon" href="img/square.png">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/rules.css">
+    <link rel="stylesheet" type="text/css" href="css/informations.css">
+    <link rel="stylesheet" type="text/css" href="css/players.css">
+    <link rel="stylesheet" type="text/css" href="css/board.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
+    <link rel="stylesheet" type="text/css" href="css/end-game.css">
+
+</head>
+
+<body>
+
+    <header></header>
+
+    <div id="rules">
+
+        <p>Bienvenue sur ce petit jeu ! Il s'agit d'un programme réalisé dans le cadre de mon apprentissage autodidacte de HTML, CSS, Javascript et Jquery. Le jeu se joue à deux, au tour par tour (vous pouvez donc le tester seul).</p>
+        <h2>Les règles</h2>
+        <ul>
+            <li>Chaque joueur se déplace en ligne droite (haut, bas, gauche, droite) jusqu'à une distance de 3 cases. Ces cases apparaissent en blanc transparent.</li>
+
+            <div class="example">
+                <div class="square">
+                    <div class="player player1"></div>
+                </div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"></div>
+            </div>
+
+            <li>Les obstacles empêchent le joueur d'aller sur la case et sur les cases suivantes.</li>
+
+            <div class="example">
+                <div class="square">
+                    <div class="player player1"></div>
+                </div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square">
+                    <div class="obstacle"></div>
+                </div>
+                <div class="square"></div>
+                <div class="square"></div>
+            </div>
+
+            <li>Lorsqu'un joueur se déplace sur une case contenant une arme ou un bouclier, il le ramasse et l'équipement remplace son ancien équipement (s'il en a un). Passer le curseur sur l'équipement permet de voir son niveau d'attaque ou de défense.</li>
+
+            <div class="example">
+                <div class="square">
+                    <div class="player player1"></div>
+                </div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"><button class="reach"></button>
+                    <div class="weapon weapon1"></div>
+                </div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"></div>
+            </div>
+
+            <li>Lorsqu'un joueur se déplace sur une case adjacente à l'autre joueur, un combat s'enclenche. Ces cases apparaissent en rouge transparent.</li>
+
+            <div class="example">
+                <div class="square">
+                    <div class="player player1"></div>
+                </div>
+                <div class="square"><button class="reach"></button></div>
+                <div class="square"><button class="reach-fight"></button></div>
+                <div class="square">
+                    <div class="player player2"></div>
+                </div>
+                <div class="square"></div>
+            </div>
+
+            <li>Le joueur qui engage le combat attaque par défaut. Le joueur qui est engagé peut contre-attaquer ou parer.</li>
+            <li>S'il choisit de contre-attaquer, les deux joueurs s'infligent les dégâts indiqués par leurs armes.</li>
+            <li>S'il choisit de parer, l'assaillant inflige les dégâts de son arme réduits de la défense du bouclier.</li>
+            <li>Les armes et boucliers s'usent lorsqu'ils s'entrechoquent (ils perdent de l'attaque ou de la défense). Les armes et boucliers détruits sont retirés du jeu.</li>
+            <li>À la fin de l'échange, les joueurs reprennent leur position initiale et les armes et boucliers (en dehors de l'équipement porté par les joueurs) sont redisposés aléatoirement sur le plateau et un nouveau round commence.</li>
+            <li>Lorsqu'un joueur n'a plus de vie après un échange, il a perdu. À noter que l'assaillant attaque en premier. S'il tue l'autre joueur, celui-ci ne contre-attaque pas (selon la règle "les morts ne se battent pas").</li>
+
+            <div class="example">
+                <div class="defender-item weapon1"></div>
+                <span> = contre-attaquer</span>
+                <div class="defender-item shield1"></div>
+                <span> = parer</span>
+            </div>
+        </ul>
+
+        <button id="first-game">Jouer</button>
+
+    </div>
+
+    <div id="informations">
+        <p>
+            <span>Informations de jeu</span>
+            <span id="informations-toggle"></span>
+        </p>
+        <hr>
+        <div id="informations-logs"></div>
+    </div>
+
+    <div id="global-wrapper">
+
+        <div id="player1">
+            <img class="player-img" src="img/player1.png" title="Joueur 1" alt="Icône du joueur 1">
+            <div class="player-hp-wrapper">
+                <div class="player-hp">20</div>
+                <div class="player-hp-bar"></div>
+                <div class="player-hp-back"></div>
+            </div>
+            <div class="player-items">
+                <div class="player-weapon">
+                    <img class="player-weapon-img" src="img/weapon0.png" title="Arme du joueur 1" alt="Arme du joueur 1">
+                    <p class="player-weapon-attack">1</p>
+                </div>
+                <div class="player-shield">
+                    <img class="player-shield-img" src="img/shield0.png" title="Bouclier du joueur 1" alt="Bouclier du joueur 1">
+                    <p class="player-shield-defense">1</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="mid-wrapper">
+
+            <div id="board-container">
+                <div id="board">
+                    <mask id="fight-mask"></mask>
+                    <mask id="end-mask">
+                        <div id="winner-img"></div>
+                        <p id="winner-player"></p>
+                        <button id="new-game">Rejouer</button>
+                    </mask>
+                    <div id="round"></div>
+                    <div id="board-elts"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="player2">
+            <img class="player-img" src="img/player2.png" title="Joueur 2" alt="Icône du joueur 2">
+            <div class="player-hp-wrapper">
+                <div class="player-hp">20</div>
+                <div class="player-hp-bar"></div>
+                <div class="player-hp-back"></div>
+            </div>
+            <div class="player-items">
+                <div class="player-weapon">
+                    <img class="player-weapon-img" src="img/weapon0.png" title="Arme du joueur 2" alt="Arme du joueur 2">
+                    <p class="player-weapon-attack">1</p>
+                </div>
+                <div class="player-shield">
+                    <img class="player-shield-img" src="img/shield0.png" title="Bouclier du joueur 2" alt="Bouclier du joueur 2">
+                    <p class="player-shield-defense">1</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <switch id="switch-arrow"></switch>
+    <switch id="switch"></switch>
+    <switch id="switch-before"></switch>
+    <switch id="switch-after"></switch>
+
+    <footer></footer>
+
+    <script src="js/jquery-3.3.1.js"></script>
+
+    <script src="js/tools.js"></script>
+    <script src="js/variables.js"></script>
+    <script src="js/informations.js"></script>
+    <script src="js/generate-board.js"></script>
+    <script src="js/move-to-position.js"></script>
+    <script src="js/switch-item.js"></script>
+    <script src="js/fight.js"></script>
+    <script src="js/new-round.js"></script>
+    <script src="js/new-game.js"></script>
+    <script src="js/process.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+/* 
+
+    #fight-mask : masque transparent au-dessus du plateau
+    #switch : icône indiquant un échange d'équipement
+    #switch-before : icône de l'équipement possédé avant l'échange
+    #switch-after : icône de l'équipement possédé après l'échange
+    #switch-arrow : flèche liant le joueur à l'information
+    .assailant-item : icône de l'équipement possédé par le joueur engageant le combat
+    .defender-item : icône de l'équipement possédé par le joueur engagé
+    .fight-arrow : flèche liant le joueur à l'information
+    .hp-lost-player1 : icône indiquant les points de vie perdus par le joueur 1
+    .hp-lost-player2 : icône indiquant les points de vie perdus par le joueur 2
+
+*/
+
+#fight-mask {
+    position: absolute;
+    width: 618px;
+    height: 618px;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 3;
+}
+
+#switch,
+#switch-before,
+#switch-after,
+#switch-arrow,
+.assailant-item,
+.defender-item,
+.fight-arrow,
+.hp-lost-player1,
+.hp-lost-player2 {
+    position: absolute;
+}
+
+#switch,
+#switch-before,
+#switch-after,
+.assailant-item,
+.defender-item,
+.hp-lost-player1,
+.hp-lost-player2 {
+    height: 40px;
+    width: 40px;
+    z-index: 6;
+}
+
+#switch,
+#switch-before,
+#switch-after,
+.assailant-item,
+.defender-item {
+    background-size: 30px 30px;
+}
+
+.hp-lost-player1,
+.hp-lost-player2 {
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    background-size: 40px 40px;
+}
+
+.hp-lost-player1 {
+    background-image: url(../img/hplostplayer1.png);
+}
+
+.hp-lost-player2 {
+    background-image: url(../img/hplostplayer2.png);
+}
+
+.defender-item {
+    border: solid 1px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#switch,
+#switch-before,
+#switch-after {
+    top: -65px;
+}
+
+#switch {
+    left: 10px;
+}
+
+#switch-before {
+    left: -30px;
+}
+
+#switch-after {
+    left: 50px;
+}
+
+#switch-arrow,
+.fight-arrow {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    z-index: 5;
+}
+
+#switch-arrow {
+    top: -25px;
+    left: 10px;
+}
+
+.defender-item:hover {
+    border: solid 2px rgba(255, 255, 255, 1);
+}
