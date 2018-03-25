@@ -1,79 +1,83 @@
-// AFFICHAGE DES INFORMATIONS DANS LE PANNEAU LATÉRAL
+// INTEGRATION OF INFO IN PANEL
 
-// [Fonction] Affichage des informations
+// [FUNCTION] SHOW INFO IN PANEL
 
-function informations(info, color) {
+function info(info, color) { // PARAMETERS : info to show, <p> color
 
-    var newInfo = document.createElement("p");
-    $(newInfo).text(info);
-    $(newInfo).css("color", color);
-    $(newInfo).hide();
-    $("#informations-logs").append(newInfo);
-    $(newInfo).fadeIn();
+    var newInfo = document.createElement("p"); // create a <p> element
+    $(newInfo).text(info); // set text to info parameter
+    $(newInfo).css("color", color); // set text color to color paramet
+    $(newInfo).hide(); // hide element
+    $("#info-logs").append(newInfo); // incorporate element at the end of the pannel
+    $(newInfo).fadeIn(); // show element with a fadeIn
 
-    infoLines++;
+    infoLines++; // increase number of lines wrote
 
-    if (infoLines > 15) {
-        $("#informations-logs").find("p:first").remove();
-        infoLines--;
+    if (infoLines > 15) { // IF number of lines wrote is above 15
+        $("#info-logs").find("p:first").remove(); // delete the first line (older)
+        infoLines--; // decrease number of lines wrote
     }
 
 }
 
-// [Fonction] Fermeture / ouverture du panneau latéral
+// [FUNCTION] HIDE/SHOW PANEL
 
-function informationsToggle() {
+function infoToggle() {
 
-    if (informationsBoard === "open") { // SI le panneau est ouvert
+    if (infoBoard === "open") { // IF the panel is open
 
-        informationsClose();
+        infoClose(); // run function to hide the panel
 
-    } else if (informationsBoard === "close") {
+    } else if (infoBoard === "close") { // IF the panel is closed
 
-        informationsOpen();
+        infoOpen(); // run function to open the panel
 
     }
 
 }
 
-// [Fonction] Fermeture du panneau latéral
+// [FUNCTION] HIDE PANEL
 
-function informationsClose() {
+function infoClose() {
 
-    $("#informations").css({
+    // Set CSS properties
+    
+    $("#info").css({
         'width': '40px',
         'padding': '40px 10px'
     });
 
-    $("#informations > p > span:first-child").hide();
-    $("#informations-logs").hide();
-    $("#informations > hr").hide();
+    $("#info > p > span:first-child").hide();
+    $("#info-logs").hide();
+    $("#info > hr").hide();
 
-    $("#informations-toggle").css({
+    $("#info-toggle").css({
         'background-image': 'url(./img/menu-toggle-right.png)'
     });
 
     $("#global-wrapper").css({
         'margin-left': '60px'
     });
-
-    informationsBoard = "close"
+    
+    infoBoard = "close"; // change value of variable
 }
 
-// [Fonction] Ouverture du panneau latéral
+// [FUNCTION] SHOW PANEL
 
-function informationsOpen() {
+function infoOpen() {
+    
+    // Set CSS properties
 
-    $("#informations").css({
+    $("#info").css({
         'width': '250px',
         'padding': '40px 20px'
     });
 
-    $("#informations > p > span:first-child").show();
-    $("#informations-logs").show();
-    $("#informations > hr").show();
+    $("#info > p > span:first-child").show();
+    $("#info-logs").show();
+    $("#info > hr").show();
 
-    $("#informations-toggle").css({
+    $("#info-toggle").css({
         'background-image': 'url(./img/menu-toggle-left.png)'
     });
 
@@ -81,9 +85,9 @@ function informationsOpen() {
         'margin-left': '270px'
     });
 
-    informationsBoard = "open"
+    infoBoard = "open"; // change value of variable
 }
 
-// Ajout de la fonction sur le bouton toggle
+// ADD AN ONCLICK FUNCTION TO TOGGLE BUTTON
 
-$("#informations-toggle").on("click", informationsToggle);
+$("#info-toggle").on("click", infoToggle);

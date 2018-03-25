@@ -1,19 +1,19 @@
 /* 
 
-    #player1 : panneau du joueur 1
-    #player2 : panneau du joueur 2
-    .player-img : icône du joueur
-    .player-hp : points de vie
-    .player-hp-wrapper : conteneur de la barre de points de vie
-    .player-hp-bar : bar de points de vie restant
-    .player-hp-back : arrière de la barre de points de vie
-    .player-items : conteneur des équipements du joueur
-    .player-weapon : conteneur de l'arme
-    .player-shield : conteneur du bouclier
-    .player-weapon-img : icône de l'arme
-    .player-shield-img: icône du bouclier
-    .player-weapon-attack : dégâts de l'arme
-    .player-shield-defense : défense du bouclier
+    #player1 : player 1 panel
+    #player2 : player 2 panel
+    .player-img : player icon
+    .player-hp : player hp (text)
+    .player-hp-wrapper : hp bar container
+    .player-hp-bar : bar showing remainings hp
+    .player-hp-back : bar under the previous one
+    .player-items : items container
+    .player-weapon : weapon container
+    .player-shield : shield container
+    .player-weapon-img : weapon icon
+    .player-shield-img: shield icon
+    .player-weapon-attack : weapon attack (level)
+    .player-shield-defense : shield defense (level)
 
 */
 
@@ -31,10 +31,12 @@
 }
 
 #player1 {
+    order: 1;
     justify-self: end;
 }
 
 #player2 {
+    order: 3;
     justify-self: start;
 }
 

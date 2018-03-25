@@ -1,18 +1,22 @@
 /* 
 
-    #board-container : conteneur du plateau de jeu
-    #board-elts : plateau de jeu
-    .square : case du plateau
-    .obstacle : obstacle sur une case
-    .player : icone du joueur sur le plateau
-    .weapon : icone d'une arme sur le plateau
-    .shield : icone d'un bouclier sur le plateau
-    .reach : case accessible par le joueur
-    .reach-fight : case accessible par le joueur et enclenchant un combat
+    #board-container : board container (around)
+    #board-elts : board
+    .square : square on the board
+    .obstacle : obstacle on the board
+    .player : player icon on the board
+    .weapon : weapon icon on the board
+    .shield : shield icon on the board
+    .reach : reachable position (square)
+    .reach-fight : reachable position leading to a fight
 
 */
 
 /*----------| CONTAINER : BOARD */
+
+#board-wrapper{
+    order: 2;
+}
 
 #board-container {
     height: 738px;

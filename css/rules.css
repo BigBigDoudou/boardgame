@@ -1,17 +1,39 @@
-/* 
-
-    #rules
-    #rules h2
-    #rules p
-    #rules li
-
-*/
-
-#rules {
+#introduction {
     padding: 40px;
     margin: 30px auto;
-    width: 800px;
+    width: 85%;
+    min-width: 500px;
+    max-width: 1200px;
     background-color: rgba(255, 255, 255, 1);
+}
+
+#introduction h2{
+    margin: 25px 0px 15px 0px;
+    font-size: 1.2em;
+}
+
+.rule {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0px;
+    background-color: rgba(250, 250, 250, 1);
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.rule-explanation,
+.rule-example {
+    padding: 15px;
+}
+
+.rule-explanation {
+    flex: 2;
+    min-width: 300px;
+}
+
+.rule-example {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
 }
 
 #rules h2 {
@@ -21,25 +43,15 @@
     color: rgb(130, 130, 130);
 }
 
-#rules p,
-#rules li {
-    margin-bottom: 5px;
-    line-height: 1.3em;
+#rules p {
+    line-height: 1.2em;
     font-size: 0.9em;
-    color: rgb(150, 150, 150);
-}
-
-#rules li {
-    list-style-type: none;
-}
-
-.example {
-    padding: 10px 0px;
 }
 
 #rules .square,
 #rules .defender-item {
     display: inline-block;
+    text-align: left;
 }
 
 #rules .square,
@@ -70,6 +82,15 @@
     font-size: 0.8em;
 }
 
+.ctrl-examples {
+    margin: auto;
+    width: 208px;
+}
+
+.ctrl-example {
+    text-align: left;
+}
+
 #rules .defender-item {
     position: static;
     background-color: rgb(50, 50, 200);
@@ -92,12 +113,12 @@
     background-image: url("../img/shield1.png");
 }
 
-.example span {
+.ctrl-example span {
     display: inline-block;
     vertical-align: top;
     line-height: 40px;
     color: rgb(140, 140, 140);
-    margin-right: 20px;
+    padding-left: 10px;
     font-size: 0.9em;
 }
 
@@ -115,4 +136,3 @@
 #first-game:hover {
     background-color: rgba(25, 25, 25, 1);
 }
-

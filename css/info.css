@@ -1,14 +1,14 @@
 /* 
 
-    #informations : panneau latéral d'informations sur le jeu
-    #informations > span : titre du panneau et bouton toggle d'ouverture/fermeture
-    #informations > hr : ligne sous le titre
-    #informations-toggle : bouton toggle d'ouverture/fermeture
-    #informations-logs p : informations affichées dans le panneau
+    #info : panel showing info about the game
+    #info > span : panel title
+    #info > hr : horizontal line under panel title
+    #info-toggle : toggle button to show/hide the panel
+    #info-logs p : info in the panel
 
 */
 
-#informations {
+#info {
     position: fixed;
     top: 20px;
     bottom: 20px;
@@ -18,7 +18,7 @@
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5) inset;
 }
 
-#informations > span {
+#info > span {
     display: inline-block;
     float: left;
     line-height: 20px;
@@ -26,12 +26,12 @@
     color: rgb(200, 200, 200);
 }
 
-#informations > hr {
+#info > hr {
     margin-top: 10px;
     margin-bottom: 20px;
 }
 
-#informations-toggle {
+#info-toggle {
     display: inline-block;
     float: right;
     width: 20px;
@@ -41,11 +41,11 @@
     cursor: pointer;
 }
 
-#informations-toggle:hover {
+#info-toggle:hover {
     background-size: 20px 20px;
 }
 
-#informations-logs p {
+#info-logs p {
     margin-bottom: 10px;
     font-size: 0.8em;
     color: rgb(150, 150, 150);

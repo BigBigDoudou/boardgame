@@ -1,15 +1,17 @@
 /* 
 
-    #fight-mask : masque transparent au-dessus du plateau
-    #switch : icône indiquant un échange d'équipement
-    #switch-before : icône de l'équipement possédé avant l'échange
-    #switch-after : icône de l'équipement possédé après l'échange
-    #switch-arrow : flèche liant le joueur à l'information
-    .assailant-item : icône de l'équipement possédé par le joueur engageant le combat
-    .defender-item : icône de l'équipement possédé par le joueur engagé
-    .fight-arrow : flèche liant le joueur à l'information
-    .hp-lost-player1 : icône indiquant les points de vie perdus par le joueur 1
-    .hp-lost-player2 : icône indiquant les points de vie perdus par le joueur 2
+    #fight-mask : mask above the board
+    #switch : icon showing a switch
+    #switch-before : icon of the before item
+    #switch-after : icon of the after item
+    #switch-arrow : arrow between player and icon
+
+    .assailant-item : icon of the assailant weapon
+    .defender-item : icons of the defender weapon and shield
+    .fight-arrow : arrow between players and icons
+
+    .hp-lost-player1 : icon showing hp lost for player 1
+    .hp-lost-player2 : icon showing hp lost for player 2
 
 */
 
@@ -59,6 +61,7 @@
     text-align: center;
     font-weight: bold;
     background-size: 40px 40px;
+    color: rgb(220, 220, 220);
 }
 
 .hp-lost-player1 {

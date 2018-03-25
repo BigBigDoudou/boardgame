@@ -1,108 +1,99 @@
-// Données de jeu
+// GAME DATAS
 
 var boardSize = 100;
 var obstaclesQty = 10;
 var weaponsQty = 9;
 var shieldsQty = 9;
 
-// Tableaux d'objets
+// OBJECTS ARRAYS
 
-var squares = []; // tableau des cases
-var players = []; // tableau des joueurs
-var obstacles = []; // tableau des obstacles
-var weapons = []; // tableau des armes
-var shields = []; // tableau des boucliers
-var reachs = []; // tableau des positions atteignables par les joueurs
+var squares = [];
+var players = [];
+var obstacles = [];
+var weapons = [];
+var shields = [];
+var reachs = [];
 
-// Tableaux de données
+// DATAS ARRAYS
 
-var remainingsObstacles = []; // tableau des positions attribuables
-var remainingsWeapons = []; // tableau des positions attribuables
-var remainingsShields = []; // tableau des positions attribuables
+var availablePositionsForObstacles = [];
+var availablePositionsForWeapons = [];
+var availablePositionsForShields = [];
 var weaponsNames = ["Tomahawk finale", "Arbalète du destin", "Griffes meurtrières", "Bâton de moine", "Boomerang ancestral", "Fléau de la liche", "Sceptre hurlant", "Marteau divin", "Gourdin préhistorique"];
 var shieldsNames = ["Protecteur", "Étoile céleste", "Croix de fer", "Signe divin", "Manteau d'araignée", "Bouclier trident", "Échos", "Bouclier viking", "Protection du paladin"];
-var initPlayersPosition = [11, 88]; // positions initiales des héros (dégaut : 11, 88)
-var colors = ["rgb(200, 50, 50)", "rgb(50, 50, 200)", "rgb(223, 127, 127)", "rgb(127, 127, 223)"]; // couleurs des joueurs (foncées + claires)
+var initPlayersPosition = [11, 88]; // initial positions (default : 11, 88)
+var colors = ["rgb(200, 50, 50)", "rgb(50, 50, 200)", "rgb(223, 127, 127)", "rgb(127, 127, 223)"]; // players colors (dark and light)
 
-// Variables utilitaires
+// TOOL VARIABLES
 
-var round = 0; // round
-var turn = 0; // tour (joueur)
-var moving = 0; // capacité à cliquer
-var reachSurrounds = []; // cases atteignables
-var reachFight; // case entraînant un combat
-var informationsBoard = "open";
+var round = 0;
+var turn = 0;
+var moving = 0;
+var reachSurrounds = [];
+var reachFight;
+var infoBoard = "open";
 var infoLines = 0;
 var moveFade = 150;
-var switchFade = 200;
-var hpFade = 800;
-var roundFade = 500;
+var switchFade = 750;
+var hpFade = 1000;
+var roundFade = 1000;
 
-// Prototypes d'objets
+// OBJECTS PROTOTYPES
 
 var Square = {
-
     initSquare: function (number, position) {
-        this.number = number; // numéro de la case
-        this.position = position; // position de la case
-        this.player = 0; // case occupée par un joueur
-        this.obstacle = 0; // case occupée par un obstacle
-        this.weapon = 0; // case occupée par une arme
-        this.shield = 0; // case occupée par un bouclier
+        this.number = number;
+        this.position = position;
+        this.player = 0; // occupied by player
+        this.obstacle = 0; // occupied by obstacle
+        this.weapon = 0; // occupied by weapon
+        this.shield = 0; // occupied by shield
     }
 };
 
 var Player = {
-
     initPlayer: function (number, position) {
-        this.number = number; // numéro du joueur
-        this.position = position; // position du joueur
-        this.attack = 1; // attaque du joueur
-        this.defense = 1; // défense du joueur
-        this.hp = 20; // vie du joueur
-        this.weapon = -1; // arme équipée
-        this.shield = -1; // bouclier équipé
+        this.number = number;
+        this.position = position;
+        this.attack = 1; // player attack (without item = 1)
+        this.defense = 1; // player defense (without item = 1)
+        this.hp = 20; // player hp (health points)
+        this.weapon = -1; // weapon equiped (-1 = none)
+        this.shield = -1; // shield equiped (-1 = none)
     }
 };
 
 var Obstacle = {
-
     initObstacle: function (number, position) {
-        this.number = number; // numéro de l'obstacle
-        this.position = position; // position de l'obstacle
+        this.number = number;
+        this.position = position;
     }
 };
 
 var Weapon = {
-
     initWeapon: function (number, name, position, attack) {
-        this.number = number; // numéro de l'arme
-        this.name = name; // nom de l'arme
-        this.position = position; // position de l'arme
-        this.attack = attack; // attaque de l'arme
+        this.number = number;
+        this.name = name; // name of the weapon (for info board)
+        this.position = position;
+        this.attack = attack;
     }
-
-}
+};
 
 var Shield = {
-
     initShield: function (number, name, position, defense) {
-        this.number = number; // numéro du bouclier
-        this.name = name; // nom du bouclier
-        this.position = position; // position du bouclier
-        this.defense = defense; // défense du bouclier
+        this.number = number;
+        this.name = name; // name of the shield (for info board)
+        this.position = position;
+        this.defense = defense;
     }
-
-}
+};
 
 var Reach = {
-
     initReach: function (player, position, side, range, fight) {
-        this.player = player; // joueur pouvant atteindre la case
-        this.position = position; // position de la case atteignable
-        this.side = side; // côté par rapport au joueur (-10 = top ; +1 = right ; + 10 = bottom ; -1 = left)
-        this.range = range; // distance du joueur en case (de 1 à 3)
-        this.fight = fight;
+        this.player = player; // player who can reach the position
+        this.position = position; // position
+        this.side = side; // side related to player (-10 = top ; +1 = right ; + 10 = bottom ; -1 = left) - this property is not used but still kept because could be usefull for animation
+        this.range = range; // range between player and reachable position (from 1 to 3)
+        this.fight = fight; // 0 by default, 1 if moving the player here lead to a fight
     }
-
-}
+};

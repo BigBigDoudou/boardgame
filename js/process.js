@@ -1,44 +1,42 @@
-// Actions initiales
+// INITIALISATION
 
-$(window).on("load", function () {
+$(window).on("load", function () { // onload
 
-    // Masquer les éléments
+    // Hide elements
     
-    $("#global-wrapper").hide();
-    $("#informations").hide();
+    $("#game-wrapper").hide();
+    $("#info").hide();
     $("#end-mask").hide();
     $("#fight-mask").hide();
     $("#round").hide();
 
-    // Si la largeur de fenêtre est inférieure à 1400px, fermer le panneau latéral
+    // Check window width
     
-    if ($(window).width() < 1400) {
-        informationsToggle();
+    if ($(window).width() < 1400) { // IF window width is below 1400px
+        infoToggle(); // close panel
     }
 
 })
 
-// [Fonction] Ouverture / fermeture dynamique du panneau latéral lors d'une modification de la largeur de la fenêtre
+// [FUNCTION] HIDE/SHOW PANEL ON WINDOW RESIZINF
 
-$(window).on("resize", debounce(function () { // utiliser la fonction "debounce" pour éviter la surcharge lorsque la taille de fenêtre est réduite manuellement
-    if ($(window).width() < 1400) {
-        informationsClose();
-    } else {
-        informationsOpen();
+$(window).on("resize", debounce(function () { // use debounce function to prevent overload
+    if ($(window).width() < 1400) { // IF window width is below 1400px
+        infoClose(); // close panel
+    } else { // ELSE
+        infoOpen(); // open panel
     }
-}, 50)); // définir le délai de calcul à 50ms
+}, 50)); // prevent function call (max one each 50ms)
 
-// [Fonction] Lancement d'une première partie
+// [FUNCTION] START GAME
 
-$("#first-game").on("click", function () {
-    $("#rules").remove();
-    $("#global-wrapper").show();
-    $("#informations").show();
-    newGame();
+$("#first-game").on("click", function () { // on first game button clicked
+    $("#introduction").remove(); // remove rules page
+    $("#game-wrapper").show(); // show game
+    $("#info").show(); // show panel
+    newGame(); // run a new game
 });
 
-// [Fonction] Lancement d'une nouvelle partie
-
-$("#new-game").on("click", function () {
-    newGame();
+$("#new-game").on("click", function () { // on new game button clicked
+    newGame(); // run a new game
 });

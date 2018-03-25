@@ -1,35 +1,30 @@
-// [Fonction] Lancement d'une nouvelle partie
+// [FUNCTION] START A NEW GAME
 
 function newGame() {
 
-    console.log("*** NEW GAME ***");
-
-    // Mettre les variable à 0 et vider les tableaux
+    // Reset variables and empty arrays
 
     round = 0;
     turn = 0;
-    squares = []; // tableau des cases
-    players = []; // tableau des joueurs
-    obstacles = []; // tableau des obstacles
-    weapons = []; // tableau des armes
-    shields = []; // tableau des boucliers
-    reachs = []; // tableau des positions atteignables par les joueurs
-    remainingsObstacles = []; // tableau des positions attribuables
-    remainingsWeapons = []; // tableau des positions attribuables
-    remainingsShields = []; // tableau des positions attribuables
+    infoLines = 0;
+    squares = [];
+    players = [];
+    obstacles = [];
+    weapons = [];
+    shields = [];
+    reachs = [];
+    availablePositionsForObstacles = [];
+    availablePositionsForWeapons = [];
+    availablePositionsForShields = [];
 
-    // Vider les conteneurs et supprimer les éléments
+    // Empty / hide DOM containers and elements
 
     $("#board-elts").empty();
     $("#switch-container").empty();
-    $("#informations-logs").empty();
-    infoLines = 0;
-
-    // Masquer les éléments
-
+    $("#info-logs").empty();
     $("#fight-mask").hide();
 
-    // Créer les icônes
+    // Create new elements
 
     var switchArrowElt = document.createElement("switch");
     var switchElt = document.createElement("switch");
@@ -51,41 +46,37 @@ function newGame() {
     $(switchBeforeElt).hide();
     $(switchAfterElt).hide();
 
-    // Mettre les statistiques initiales
+    // Set stats to default
 
-    $(".player-hp").text("20"); // points de vie
-    $(".player-hp-bar").css("width", "128px"); // barres de vie
-    $(".player-weapon-img").attr("src", "img/weapon0.png"); // images d'armes
-    $(".player-shield-img").attr("src", "img/shield0.png"); // images de boucliers
+    $(".player-hp").text("20");
+    $(".player-hp-bar").css("width", "128px");
+    $(".player-weapon-img").attr("src", "img/weapon0.png");
+    $(".player-shield-img").attr("src", "img/shield0.png")
     $(".player-weapon-attack").text("1");
     $(".player-shield-defense").text("1");
 
-    // Préparer le plateau
+    // Generate board
 
     generateSquares(boardSize);
-    generateRemainings();
-    initRemoveFromRemainings();
+    generateAvailablePositions(boardSize);
+    initRemoveFromAvailablePositions();
     generatePlayers();
     generateObstacles(obstaclesQty);
     generateWeapons(weaponsQty);
     generateShields(shieldsQty);
-
-    // Dessiner le plateau
-
+    
     draw(squares, "square", 0);
     draw(players, "player", 0);
     draw(obstacles, "obstacle", 0);
 
-    // Montrer le plateau
-
     $("#end-mask").fadeOut();
 
-    // Intégrer les équipements
+    // Incorporate items
 
     draw(weapons, "weapon", 1);
     draw(shields, "shield", 1);
 
-    // Lancer le premier tour
+    // Run first turn
 
     newRound(turn);
 

@@ -1,159 +1,158 @@
-// CHANGEMENT D'ÉQUIPEMENT
+// SWITCHING ITEMS
 
-// [Fonction] Changement de l'équipement du joueur
+// [FUNCTION] SWITCH ITEM
 
-function switchItem(player, position, type) { // PARAMÈTRES : joueur, position du joueur, type d'équipement
+function switchItem(player, position, type) { // PARAMETERS : player, position, item type
 
-    var itemBefore; // équipement porté avant le changement
-    var itemAfter; // équipement porté avant le changement
-    var itemArray; // tableau correspondant au type d'équipement trouvé
-    var itemIdStart; // nomenclature d'Id de l'équipement
-    var itemBeforeLvl; // niveau de l'équipement d'avant (attaque ou défense)
-    var itemAfterLvl; // niveau de l'équipement d'après (attaque ou défense)
+    var itemBefore; // item before switch
+    var itemAfter; // item after switch
+    var itemArray; // array containing items of this type
+    var itemIdRoot; // root of id (two first letters uppercase)
+    var itemBeforeLvl; // level of before item
+    var itemAfterLvl; // level of after item
 
-    if (type === "weapon") { // SI il s'agit d'une arme
-        itemArray = weapons;
-        itemBefore = players[player].weapon;
-        itemIdStart = "#WE";
-    } else if (type === "shield") { // SI il s'agit d'un bouclier
-        itemArray = shields;
-        itemBefore = players[player].shield;
-        itemIdStart = "#SH";
+    if (type === "weapon") { // IF item is a weapon
+        itemArray = weapons; // set array to weapons
+        itemBefore = players[player].weapon; // set item before to player weapon
+        itemIdRoot = "#WE"; // set item root to #WE
+    } else if (type === "shield") { // IF item is a weapon
+        itemArray = shields; // "
+        itemBefore = players[player].shield; // "
+        itemIdRoot = "#SH"; // "
     }
 
-    for (var i = 0; i < itemArray.length; i++) { // POUR chaque objet du tableau d'équipement
+    for (var i = 0; i < itemArray.length; i++) { // FOR each item (weapon or shield)
 
-        if (itemArray[i].position === position) { // SI une correspondance avec l'équipement est trouvée (position identique)
+        if (itemArray[i].position === position) { // IF the position of item is the position in paramet
 
-            itemAfter = i; // équipement trouvé
+            itemAfter = i; // set variable to item found
 
-            // Animation d'échange d'équipement
+            // Animation
 
-            $("#switch-arrow").css("border-top-color", colors[player]);
-            $("#switch").css("background-color", colors[player]);
-            $("#switch-before").css("background-color", colors[player]);
-            $("#switch-after").css("background-color", colors[player]);
-            $("#SQ" + position).append($("#switch-arrow"));
-            $("#SQ" + position).append($("#switch"));
-            $("#SQ" + position).append($("#switch-before"));
-            $("#SQ" + position).append($("#switch-after"));
+            $("#switch-arrow").css("border-top-color", colors[player]); // set CSS properties
+            $("#switch").css("background-color", colors[player]); // "
+            $("#switch-before").css("background-color", colors[player]); // "
+            $("#switch-after").css("background-color", colors[player]); // "
+            $("#SQ" + position).append($("#switch-arrow")); // incorporate icons
+            $("#SQ" + position).append($("#switch")); // "
+            $("#SQ" + position).append($("#switch-before")); // "
+            $("#SQ" + position).append($("#switch-after")); // "
 
-            if (itemBefore >= 0) { // SI le joueur possédait un équipement auparavant
-                $("#switch").css("background-image", "url('img/switch-arrow.png')");
+            if (itemBefore >= 0) { // IF player had an item of this type before
+                $("#switch").css("background-image", "url('img/switch-arrow.png')"); // set CSS properties
                 $("#switch-before").css("background-image", "url('img/" + type + (itemBefore + 1) + ".png')");
                 $("#switch-after").css("background-image", "url('img/" + type + (itemAfter + 1) + ".png')");
-                $("#switch-before").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
-                $("#switch-after").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
-            } else { // SI le joueur ne possédait pas d'équipement auparavant
-                $("#switch").css("background-image", "url('img/" + type + (itemAfter + 1) + ".png')");
+                $("#switch-before").show(1).delay(switchFade).hide(1); // show temporarly
+                $("#switch-after").show(1).delay(switchFade).hide(1); // "
+            } else { // ELSE
+                $("#switch").css("background-image", "url('img/" + type + (itemAfter + 1) + ".png')"); // set CSS properties
             }
 
-            $("#switch-arrow").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
-            $("#switch").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
+            $("#switch-arrow").show(1).delay(switchFade).hide(1); // show temporarly
+            $("#switch").show(1).delay(switchFade).hide(1); // "
 
-            // Ajout du nouvel équipement dans les informations joueur
+            // Update player stats
+
+            if (type === "weapon") { // IF item is a weapon
+                itemAfterLvl = itemArray[i].attack; // get attack stats (used to info)
+                players[player].weapon = itemAfter; // change weapon
+                players[player].attack = itemArray[itemAfter].attack; // update attack stats
+            } else if (type === "shield") { // "
+                itemAfterLvl = itemArray[i].defense; // "
+                players[player].shield = itemAfter; // "
+                players[player].defense = itemArray[itemAfter].defense; // "
+            }
+
+            $("#player" + (turn + 1) + " .player-" + type + "-img").attr("src", "img/" + type + (itemAfter + 1) + ".png"); // update icon in player panel
 
             if (type === "weapon") {
-                itemAfterLvl = itemArray[i].attack;
-                players[player].weapon = itemAfter; // changer l'équipement du joueur
-                players[player].attack = itemArray[itemAfter].attack; // changer les statistiques du joueur
+                $("#player" + (turn + 1) + " .player-weapon-attack").text(players[turn].attack); // update stats in player panel
             } else if (type === "shield") {
-                itemAfterLvl = itemArray[i].defense;
-                players[player].shield = itemAfter; // changer l'équipement du joueur
-                players[player].defense = itemArray[itemAfter].defense; // changer les statistiques du joueur
+                $("#player" + (turn + 1) + " .player-shield-defense").text(players[turn].defense); // "
             }
 
-            $("#player" + (turn + 1) + " .player-" + type + "-img").attr("src", "img/" + type + (itemAfter + 1) + ".png"); // mettre à jour de l'icône d'équipement dans les informations du joueur
+            // Replace item
 
-            if (type === "weapon") {
-                $("#player" + (turn + 1) + " .player-weapon-attack").text(players[turn].attack); // mise à jour des statistiques dans les informations du joueur
-            } else if (type === "shield") {
-                $("#player" + (turn + 1) + " .player-shield-defense").text(players[turn].defense); // mise à jour des statistiques dans les informations du joueur
-            }
-
-            // Remplacement de l'équipement et informations
-
-            if (itemBefore >= 0) { // SI le joueur possédait un équipement auparavant
+            if (itemBefore >= 0) { // If player had an item of this type before
 
                 if (type === "weapon") {
-                    itemBeforeLvl = itemArray[i].attack;
+                    itemBeforeLvl = itemArray[i].attack; // get before attack stats (used to info)
                 } else if (type === "shield") {
-                    itemBeforeLvl = itemArray[i].defense;
+                    itemBeforeLvl = itemArray[i].defense; // "
                 }
 
-                itemArray[itemBefore].position = position; // positionner l'ancien équipement sur le plateau à la position actuelle
-                $("#SQ" + position).append($(itemIdStart + itemBefore)); // transférer l'ancien équipement dans le DOM à sa nouvelle position
-                $(itemIdStart + itemBefore).show(); // afficher l'ancien équipement dans le DOM (auparavant caché lorsqu'il était trouvé)
+                itemArray[itemBefore].position = position; // set before item position to actual position (dropped by player)
+                $("#SQ" + position).append($(itemIdRoot + itemBefore)); // incorporate before item in DOM
+                $(itemIdRoot + itemBefore).show(); // show before utem
 
-                console.log("%c|" + position + "| Le joueur " + (player + 1) + " a posé '" + itemArray[itemBefore].name + "' (" + itemBeforeLvl + ") et ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ")", "color:rgb(0, 0, 255)"); // afficher l'information dans la console
-                informations("Le joueur " + (player + 1) + " a posé '" + itemArray[itemBefore].name + "' (" + itemBeforeLvl + ") et ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ").", "#76a5af"); // afficher les informations dans le panneau
+                info("Le joueur " + (player + 1) + " a posé '" + itemArray[itemBefore].name + "' (" + itemBeforeLvl + ") et ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ").", "#76a5af"); // show info in panel
 
-            } else { // SI le héros ne possédait pas d'arme auparavant
+            } else { // If player had NOT an item of this type before
 
-                squares[position].weapon = 0; // définir le nombre d'armes sur la case à 0
-                squares[position].shield = 0; // définir le nombre de boucliers sur la case à 0
-                console.log("%c|" + position + "| Le joueur " + (player + 1) + " a ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ")", "color:rgb(0, 0, 255)"); // afficher l'information dans la console
-                informations("Le joueur " + (player + 1) + " a ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ").", "#76a5af"); // afficher les informations dans le panneau
+                squares[position].weapon = 0; // set presence of weapon to 0
+                squares[position].shield = 0; // "
+               
+                info("Le joueur " + (player + 1) + " a ramassé '" + itemArray[itemAfter].name + "' (" + itemAfterLvl + ").", "#76a5af"); // show info in panel
             }
 
-            // Masquage de l'équipement trouvé
+            // Hide new item from the board
 
-            itemArray[itemAfter].position = -1; // extraire du plateau l'équipement trouvé
-            $(itemIdStart + itemAfter).hide(); // cacher l'équipement trouvé
+            itemArray[itemAfter].position = -1; // extract new item from board
+            $(itemIdRoot + itemAfter).hide(); // hide new item
 
-            break; // arrêter la boucle (il ne peut y avoir qu'un équipement sur une position donnée)
+            break; // stop loop (only one item can be in a given position)
 
         }
 
     }
 }
 
-// [Fonction] Affichage du niveau d'un équipement
+// [FUNCTION] SHOW ITEMS LEVEL
 
 function showItemsLevel() {
 
-    var id = Number(this.id.substr(2)); // récupérer l'id de l'équipement à partir de l'id de l'élément DOM lançant la fonction
-    var type = $(this).attr("class"); // récupérer la classe de l'élément DOM lançant la fonction
+    var id = Number(this.id.substr(2)); // get this id
+    var type = $(this).attr("class"); // get this class
 
-    $(this).css("background-image", "none"); // masquer l'image d'arrière-plan
+    $(this).css("background-image", "none"); // hide background image
 
-    if (type === "weapon") { // SI il s'agit d'une arme
+    if (type === "weapon") { // IF item is a weapon
 
-        if ($(this).parent().parent().hasClass("example") === true) { // SI l'arme est dans la page des règles
-            $(this).text("4"); // afficher 4
-        } else { // SINON
-            $(this).text(weapons[id].attack); // afficher l'attaque
+        if ($(this).parent().parent().hasClass("rule-example") === true) { // IF it's in the rules page
+            $(this).text("4"); // show 4
+        } else { // ELSE (in the game)
+            $(this).text(weapons[id].attack); // show attack
         }
-    } else { // SI il s'agit d'un bouclier
+    } else { // IF item is a shield
 
-        if ($(this).parent().parent().hasClass("example") === true) { // SI le bouclier est dans la page des règles
-            $(this).text("2"); // afficher 2
-        } else { // SINON
-            $(this).text(shields[id].defense); // afficher la défense
+        if ($(this).parent().parent().hasClass("rule-example") === true) { // "
+            $(this).text("2"); // "
+        } else { // "
+            $(this).text(shields[id].defense); // "
         }
 
     }
 
 }
 
-// [Fonction] Masquage du niveau d'un équipement
+// [FUNCTION] HIDE ITEMS LEVEL
 
 function hideItemsLevel() {
 
-    var id = Number(this.id.substr(2)); // récupérer l'id de l'équipement à partir de l'id de l'élément DOM lançant la fonction
-    var type = $(this).attr("class"); // récupérer la classe de l'élément DOM lançant la fonction
+    var id = Number(this.id.substr(2)); // get this id
+    var type = $(this).attr("class"); // get this class
 
-    $(this).text(""); // supprimer le contenu textuel
+    $(this).text(""); // remove text
 
-    if ($(this).parent().parent().hasClass("example") === true) { // SI l'équipement est dans la page des règles
-        $(this).css("background-image", "url('img/weapon1.png')") // afficher l'image correspondante
-    } else {
-        $(this).css("background-image", "url('img/" + type + (id + 1) + ".png')") // afficher l'image correspondante
+    if ($(this).parent().parent().hasClass("rule-example") === true) { // IF it's in the rules page
+        $(this).css("background-image", "url('img/weapon1.png')") // show first weapon image
+    } else { // ELSE
+        $(this).css("background-image", "url('img/" + type + (id + 1) + ".png')") // show item image
     }
 
 }
 
-// Application des fonctions sur les équipements
+// ADD ONMOUSEOVER FUNCTION
 
 $(document).on("mouseover", ".weapon", showItemsLevel);
 $(document).on("mouseover", ".shield", showItemsLevel);

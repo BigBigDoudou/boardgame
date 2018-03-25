@@ -19,7 +19,8 @@
 
 * {
     font-family: "Roboto condensed", "Arial", sans-serif;
-    color: rgb(200, 200, 200);
+    font-size: 1em;
+    color: rgb(120, 120, 120);
 }
 
 /*----------| HEADER & FOOTER */
@@ -51,7 +52,7 @@ body {
 
 /*----------| GAME */
 
-#global-wrapper {
+#game-wrapper {
     display: grid;
     grid-template-columns: 210px 738px 210px;
     width: 1118px;

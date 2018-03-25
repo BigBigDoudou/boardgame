@@ -1,160 +1,137 @@
-// COMBAT ENTRE LES JOUEURS
+// FIGHTS
 
-// [Fonction] Proposition des actions de combat
+// *** [FUNCTION] SET FIGHT CONTROLS
 
 function startFight() {
 
-    $("#fight-mask").fadeIn(200); // appliquer le masque sur le plateau
+    $("#fight-mask").fadeIn(200); // apply mask on board
+    info("Le joueur " + (turn + 1) + " attaque le joueur " + (1 - turn + 1) + ".", "#e06666"); // show info in panel
 
-    console.log("Le joueur " + (turn + 1) + " attaque le joueur " + (1 - turn + 1) + "."); // afficher les informations dans la console
-    informations("Le joueur " + (turn + 1) + " attaque le joueur " + (1 - turn + 1) + ".", "#e06666"); // afficher les informations dans le panneau
+    // Create elements
 
-    // Créer les éléments graphiques
+    var assailantWeaponArrow = document.createElement("arrow"); // create a arrow element for assailant weapon
+    var assailantWeapon = document.createElement("attack"); // create a element for assailant weapon
 
-    var assailantWeaponArrow = document.createElement("arrow"); // créer un élément flèche pour l'arme de l'aissaillant
-    var assailantWeapon = document.createElement("attack"); // créer un élément pour l'arme de l'assaillant
+    var defenderWeaponArrow = document.createElement("arrow"); // create a arrow element for defender weapon
+    var defenderShieldArrow = document.createElement("arrow"); // create a element for defender weapon
+    var defenderWeapon = document.createElement("attack"); // create a arrow element for defender shield
+    var defenderShield = document.createElement("defense"); // create a element for defender shield
 
-    var defenderWeaponArrow = document.createElement("arrow"); // créer un élément flèche pour l'arme du défenseur
-    var defenderShieldArrow = document.createElement("arrow"); // créer un élément pour l'arme du défenseur
-    var defenderWeapon = document.createElement("attack"); // créer un élément flèche pour le bouclier du défenseur
-    var defenderShield = document.createElement("defense"); // créer un élément pour le bouclier du défenseur
+    // Add classes
 
-    // Ajouter les classes
+    $(assailantWeaponArrow).addClass("fight-arrow"); // add class to arrow
+    $(assailantWeapon).addClass("assailant-item"); // "
 
-    $(assailantWeaponArrow).addClass("fight-arrow");
-    $(assailantWeapon).addClass("assailant-item");
+    $(defenderWeaponArrow).addClass("fight-arrow"); // "
+    $(defenderShieldArrow).addClass("fight-arrow"); // "
+    $(defenderWeapon).addClass("defender-item"); // "
+    $(defenderShield).addClass("defender-item"); // "
 
-    $(defenderWeaponArrow).addClass("fight-arrow");
-    $(defenderShieldArrow).addClass("fight-arrow");
-    $(defenderWeapon).addClass("defender-item");
-    $(defenderShield).addClass("defender-item");
+    // Define properties
 
-    // Définir les propriétés CSS générales
+    $(assailantWeapon).css("background-color", colors[turn + 2]); // set light color for assailant weapon (disable)
+    $(assailantWeapon).css("background-image", "url('img/weapon" + (players[turn].weapon + 1) + ".png')"); // set background-image
 
-    $(assailantWeapon).css("background-color", colors[turn + 2]);
-    $(assailantWeapon).css("background-image", "url('img/weapon" + (players[turn].weapon + 1) + ".png')");
+    $(defenderWeapon).css("background-color", colors[1 - turn]); // "
+    $(defenderWeapon).css("background-image", "url('img/weapon" + (players[1 - turn].weapon + 1) + ".png')"); // "
+    $(defenderShield).css("background-color", colors[1 - turn]); // "
+    $(defenderShield).css("background-image", "url('img/shield" + (players[1 - turn].shield + 1) + ".png')"); // "
 
-    $(defenderWeapon).css("background-color", colors[1 - turn]);
-    $(defenderWeapon).css("background-image", "url('img/weapon" + (players[1 - turn].weapon + 1) + ".png')");
-    $(defenderShield).css("background-color", colors[1 - turn]);
-    $(defenderShield).css("background-image", "url('img/shield" + (players[1 - turn].shield + 1) + ".png')");
+    // Define icons positions
 
-    // Définir l'emplacement des icônes de combat
+    var assailantSide; // add a variable for assailant side (relatively to defender)
+    var defenderSide; // add a variable for defender side (relatively to assailant)
 
-    var assailantSide;
-    var defenderSide;
+    switch (players[turn].position - players[1 - turn].position) { // check difference between positions of assailant and defender
 
-    switch (players[turn].position - players[1 - turn].position) {
-
-        case -10: // le joueur qui attaque vient d'au-dessus
+        case -10: // CASE assailant comes from top
             assailantSide = "top";
             defenderSide = "bottom";
-
             $(assailantWeaponArrow).css({
                 'top': '-25px',
                 'left': '10px'
             });
-
             $(assailantWeapon).css({
                 'top': '-65px',
                 'left': '10px'
             });
-
             $(defenderWeaponArrow).css({
                 'top': '45px',
                 'left': '-15px'
             });
-
             $(defenderWeapon).css({
                 'top': '85px',
                 'left': '-15px'
             });
-
             $(defenderShieldArrow).css({
                 'top': '45px',
                 'left': '35px'
             });
-
             $(defenderShield).css({
                 'top': '85px',
                 'left': '35px'
             });
-
             break;
 
-        case 1: // le joueur qui attaque vient de la droite
+        case 1: // CASE assailant comes from right
             assailantSide = "right";
             defenderSide = "left";
-
             $(assailantWeaponArrow).css({
                 'top': '10px',
                 'left': '45px'
             });
-
             $(assailantWeapon).css({
                 'top': '10px',
                 'left': '85px'
             });
-
             $(defenderWeaponArrow).css({
                 'top': '-15px',
                 'left': '-25px'
             });
-
             $(defenderWeapon).css({
                 'top': '-15px',
                 'left': '-65px'
             });
-
             $(defenderShieldArrow).css({
                 'top': '35px',
                 'left': '-25px'
             });
-
             $(defenderShield).css({
                 'top': '35px',
                 'left': '-65px'
             });
-
             break;
 
-        case 10: // le joueur qui attaque vient d'en dessous
+        case 10: // CASE assailant comes from bottom
             assailantSide = "bottom";
             defenderSide = "top";
-
             $(assailantWeaponArrow).css({
                 'top': '45px',
                 'left': '10px'
             });
-
             $(assailantWeapon).css({
                 'top': '85px',
                 'left': '10px'
             });
-
             $(defenderWeaponArrow).css({
                 'top': '-25px',
                 'left': '-15px'
             });
-
             $(defenderWeapon).css({
                 'top': '-65px',
                 'left': '-15px'
             });
-
             $(defenderShieldArrow).css({
                 'top': '-25px',
                 'left': '35px'
             });
-
             $(defenderShield).css({
                 'top': '-65px',
                 'left': '35px'
             });
-
             break;
 
-        case -1: // le joueur qui attaque vient de la gauche
+        case -1: // CASE assailant comes from left
             assailantSide = "left";
             defenderSide = "right";
             $(assailantWeaponArrow).css({
@@ -184,30 +161,30 @@ function startFight() {
             break;
     }
 
-    // Créer les icônes de combat
+    // Define CSS properties
 
-    $(assailantWeaponArrow).css("border-" + assailantSide + "-color", colors[turn + 2]); // créer les flèches (mettre en couleur une bordure)
-    $(defenderWeaponArrow).css("border-" + defenderSide + "-color", colors[1 - turn]);
-    $(defenderShieldArrow).css("border-" + defenderSide + "-color", colors[1 - turn]);
+    $(assailantWeaponArrow).css("border-" + assailantSide + "-color", colors[turn + 2]); // add a border to arrow (shows a triangle)
+    $(defenderWeaponArrow).css("border-" + defenderSide + "-color", colors[1 - turn]); // "
+    $(defenderShieldArrow).css("border-" + defenderSide + "-color", colors[1 - turn]); // "
 
-    $(assailantWeaponArrow).hide(); // masquer les éléments
-    $(assailantWeapon).hide();
-    $(defenderWeaponArrow).hide();
-    $(defenderShieldArrow).hide();
-    $(defenderWeapon).hide();
-    $(defenderShield).hide();
+    $(assailantWeaponArrow).hide(); // hide element
+    $(assailantWeapon).hide(); // "
+    $(defenderWeaponArrow).hide(); // "
+    $(defenderShieldArrow).hide(); // "
+    $(defenderWeapon).hide(); // "
+    $(defenderShield).hide(); // "
 
-    // Ajouter les fonctions au clic
+    // Add onclick functions
 
-    $(defenderWeapon).on("click", function () {
+    $(defenderWeapon).on("click", function () { // add onclick function on defender weapon
         chooseAction("attack");
     });
 
-    $(defenderShield).on("click", function () {
+    $(defenderShield).on("click", function () { // add onclick function on defender shield
         chooseAction("defense");
     });
 
-    // Intégrer les éléments dans le DOM et les afficher en fondu
+    // Incorporate elements in DOM
 
     $("#SQ" + players[turn].position).append(assailantWeaponArrow);
     $("#SQ" + players[turn].position).append(assailantWeapon);
@@ -225,95 +202,89 @@ function startFight() {
 
 }
 
-// [Fonction] Choix des actions de combat
+// [FUNCTION] DEFINE FIGHT IMPACTS
 
 function chooseAction(action) {
 
-    // Créer les variables locales
-    
-    var assailantAttack = players[turn].attack; // attaque de l'assaillant
-    var defenderAttack = players[1 - turn].attack; // attaque du défenseur
-    var defenderDefense = players[1 - turn].defense; // défense du défenseur
+    // Remove controls
 
-    var assailantDamages = 0; // dégâts réalisés par l'assaillant
-    var defenderDamages = 0; // dégâts réalisés par le défenseur
-
-    // Définir les réactions en fonction du choix du joueur attaqué
-    
-    if (action === "attack") { // SI le défenseur contre-attaque
-
-        console.log("Le joueur " + (1 - turn + 1) + " contre-attaque."); // afficher l'information dans la console
-        informations("Le joueur " + (1 - turn + 1) + " contre-attaque.", "#f6b26b"); // afficher les informations dans le panneau
-        assailantDamages = assailantAttack; // appliquer les dégâts de l'assaillant
-        defenderDamages = defenderAttack; // appliquer les dégâts du défenseur
-
-    } else if (action === "defense") { // SI le défenseur défend
-
-        console.log("Le joueur " + (1 - turn + 1) + " se défend."); // afficher l'information dans la console
-        informations("Le joueur " + (1 - turn + 1) + " se défend.", "#f6b26b"); // afficher les informations dans le panneau
-        assailantDamages = assailantAttack - defenderDefense; // appliquer les dégâts de l'assaillant réduit de la défense du défenseur
-        if (assailantDamages < 0) {
-            assailantDamages = 0;
-        }
-
-        // Mettre à jour les équipements
-        
-        if (players[turn].weapon !== -1) { // SI l'assaillant possède une arme
-            weapons[players[turn].weapon].attack -= defenderDefense; // réduire les dégâts de l'arme de la défense du défenseur
-        }
-
-        if (players[1 - turn].shield !== -1) { // SI le défenseur possède un bouclier
-            shields[players[1 - turn].shield].defense -= players[turn].attack; // réduire la défense du bouclier de l'attaque de l'assaillant
-        }
-
-        if (players[turn].weapon !== -1) {
-            if (weapons[players[turn].weapon].attack <= 0) { // SI l'attaque de l'arme est nulle (arme détruite)
-                console.log("L'arme du joueur " + (turn + 1) + " s'est brisée."); // afficher l'information dans la console
-                informations("L'arme du joueur " + (turn + 1) + " s'est brisée.", "#76a5af"); // afficher les informations dans le panneau
-                weapons[players[turn].weapon].position = -2; // extraire l'arme du jeu
-                players[turn].weapon = -1; // enlever l'arme du joueur
-                players[turn].attack = 1; // définir l'attaque du joueur à 1
-                $("#player" + (turn + 1) + " .player-weapon-attack").text(players[turn].attack); // mettre à jour les statistiques
-                $("#player" + (turn + 1) + " .player-weapon-img").attr("src", "img/weapon0.png"); // afficher l'icône d'absence d'arme
-            } else { // SINON
-                players[turn].attack = weapons[players[turn].weapon].attack; // mettre à jour l'attaque du joueur
-                $("#player" + (turn + 1) + " .player-weapon-attack").text(players[turn].attack); // mettre à jour les statistiques
-            }
-        }
-
-        if (players[1 - turn].shield !== -1) {
-            if (shields[players[1 - turn].shield].defense <= 0) { // SI la défense du bouclier est nulle (bouclier détruit)
-                console.log("Le bouclier du joueur " + (1 - turn + 1) + " a éclaté en morceaux."); // afficher l'information dans la console
-                informations("Le bouclier du joueur " + (1 - turn + 1) + " a éclaté en morceaux.", "#76a5af"); // afficher les informations dans le panneau
-                shields[players[1 - turn].shield].position = -2; // extraire le bouclier du jeu
-                players[1 - turn].shield = -1; // enlever le bouclier du joueur
-                players[1 - turn].defense = 1; // définir la défense du joueur à 1
-                $("#player" + (1 - turn + 1) + " .player-shield-defense").text(players[1 - turn].defense); // mettre à jour les statistiquesr
-                $("#player" + (1 - turn + 1) + " .player-shield-img").attr("src", "img/shield0.png"); // afficher l'icône d'absence de bouclier
-            } else { // SINON
-                players[1 - turn].defense = shields[players[1 - turn].shield].defense; // mettre à jour la défense du joueur
-                $("#player" + (1 - turn + 1) + " .player-shield-defense").text(players[turn].defense); // mettre à jour les statistiques
-            }
-        }
-
-    }
-
-    // Supprimer les icônes d'action
-    
     $("arrow").remove();
     $("attack").remove();
     $("defense").remove();
     
-    // Créer les éléments affichant les dégâts subit
+    // Create variables
 
-    var assailantHpLost = document.createElement("heart"); // créer un élément pour les dégâts subits l'assaillant
-    var defenderHpLost = document.createElement("heart"); // créer un élément pour les dégâts subits le défenseur
+    var assailantAttack = players[turn].attack; // attack from assailant
+    var defenderAttack = players[1 - turn].attack; // attack from defender
+    var defenderDefense = players[1 - turn].defense; // defense from defender
 
-    // Identifier la position des éléments
-    
+    var assailantDamages = 0; // damages from assailant
+    var defenderDamages = 0; // damages from defender
+
+    // Define impacts
+
+    if (action === "attack") { // IF defender counterattacks
+        info("Le joueur " + (1 - turn + 1) + " contre-attaque.", "#f6b26b"); // show info in panel
+        assailantDamages = assailantAttack; // apply assailant attack
+        defenderDamages = defenderAttack; // apply defender attack
+
+    } else if (action === "defense") { // IF defender blocks
+        info("Le joueur " + (1 - turn + 1) + " se défend.", "#f6b26b"); // show info in panel
+        assailantDamages = assailantAttack - defenderDefense; // apply assailant attack reduced by defender defense
+        if (assailantDamages < 0) { // IF damages are below zero (shield defense > weapon attack)
+            assailantDamages = 0; // set damages to zero
+        }
+
+        // Update stuff
+
+        if (players[turn].weapon !== -1) { // IF assailant possesses weapon
+            weapons[players[turn].weapon].attack -= defenderDefense; // decrease weapon attack by shield defense
+        }
+
+        if (players[1 - turn].shield !== -1) { // IF defender possesses shield
+            shields[players[1 - turn].shield].defense -= players[turn].attack; // decrease shield defense by weapon attack
+        }
+
+        if (players[turn].weapon !== -1) { // IF assailant possesses weapon
+            if (weapons[players[turn].weapon].attack <= 0) { // IF weapon attack is below zero
+                info("L'arme du joueur " + (turn + 1) + " s'est brisée.", "#76a5af"); // show info in panel
+                weapons[players[turn].weapon].position = -2; // remove weapon from the game
+                players[turn].weapon = -1; // remove weapon from assailant
+                players[turn].attack = 1; // set assailant attack to 1 (default)
+                $("#player" + (turn + 1) + " .player-weapon-img").attr("src", "img/weapon0.png"); // update weapon icon (default)
+            } else { // ELSE
+                players[turn].attack = weapons[players[turn].weapon].attack; // set assailant attack to weapon attack
+            }
+        }
+        
+        $("#player" + (turn + 1) + " .player-weapon-attack").text(players[turn].attack); // update assailant attack stats
+
+        if (players[1 - turn].shield !== -1) { // IF defender possesses shield
+            if (shields[players[1 - turn].shield].defense <= 0) { // IF shield defense is below zero
+                info("Le bouclier du joueur " + (1 - turn + 1) + " a éclaté en morceaux.", "#76a5af"); // show info in panel
+                shields[players[1 - turn].shield].position = -2; // remove shield from the game
+                players[1 - turn].shield = -1; // remove shield from defender
+                players[1 - turn].defense = 1; // set defender defense to 1 (default)
+                $("#player" + (1 - turn + 1) + " .player-shield-img").attr("src", "img/shield0.png"); // update shield icon (default)
+            } else { // SINON
+                players[1 - turn].defense = shields[players[1 - turn].shield].defense; // set defender defense to shield defense
+            }
+        }
+        
+        $("#player" + (1 - turn + 1) + " .player-shield-defense").text(players[1 - turn].defense); // update defender defense stats
+
+    }
+
+    // Create elements for hp lost
+
+    var assailantHpLost = document.createElement("heart"); // create element for hp lost by assailant
+    var defenderHpLost = document.createElement("heart"); // create element for hp lost by defender
+
+    // Define icons positions
+
     switch (players[turn].position - players[1 - turn].position) {
 
-        case -10: // le joueur qui attaque vient d'au-dessus
+        case -10: // CASE assailant comes from top
 
             $(assailantHpLost).css({
                 'top': '-45px',
@@ -327,7 +298,7 @@ function chooseAction(action) {
 
             break;
 
-        case 1: // le joueur qui attaque vient de la droite
+        case 1: // CASE assailant comes from right
 
             $(assailantHpLost).css({
                 'top': '10px',
@@ -341,7 +312,7 @@ function chooseAction(action) {
 
             break;
 
-        case 10: // le joueur qui attaque vient d'en dessous
+        case 10: // CASE assailant comes from bottom
 
             $(assailantHpLost).css({
                 'top': '65px',
@@ -355,7 +326,7 @@ function chooseAction(action) {
 
             break;
 
-        case -1: // le joueur qui attaque vient de la gauche
+        case -1: // CASE assailant comes from left
 
             $(assailantHpLost).css({
                 'top': '10px',
@@ -370,73 +341,69 @@ function chooseAction(action) {
             break;
     }
 
-    // Ajouter les propriétés
-    
-    $(assailantHpLost).addClass("hp-lost-player" + (turn + 1)); // ajouter la classe
-    $(defenderHpLost).addClass("hp-lost-player" + (1 - turn + 1)); // ajouter la classe
-    $(assailantHpLost).text("- " + defenderDamages); // indiquer les points de vie perdus dans l'icône
-    $(defenderHpLost).text("- " + assailantDamages); // indiquer les points de vie perdus dans l'icône
-    $(assailantHpLost).hide(); // masquer l'élément
-    $(defenderHpLost).hide(); // masquer l'élément
-    $("#SQ" + players[1 - turn].position).append(defenderHpLost);
-    $("#SQ" + players[turn].position).append(assailantHpLost);
+    // Define CSS properties
 
-    // Afficher les éléments dans le DOM
-    
-    if ((players[1 - turn].hp - assailantDamages) <= 0) { // SI l'assaillant tue le défenseur
-        $(defenderHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // afficher puis masquer uniquement pour le défenseur
+    $(assailantHpLost).addClass("hp-lost-player" + (turn + 1)); // add class
+    $(defenderHpLost).addClass("hp-lost-player" + (1 - turn + 1)); // "
+    $(assailantHpLost).text("- " + defenderDamages); // set text to hp lost
+    $(defenderHpLost).text("- " + assailantDamages); // "
+    $(assailantHpLost).hide(); // hide element
+    $(defenderHpLost).hide(); // "
+    $("#SQ" + players[1 - turn].position).append(defenderHpLost); // incorporate element to related square
+    $("#SQ" + players[turn].position).append(assailantHpLost); // "
+
+    // Show elements in DOM
+
+    if ((players[1 - turn].hp - assailantDamages) <= 0) { // IF assailant kills defender (first strike of the fight)
+        $(defenderHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // show temporarily for defender
     } else { //SINON
-        $(defenderHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // afficher puis masquer pour le défenseur
-        $(assailantHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // afficher puis masquer pour l'attaquant
+        $(defenderHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // show temporarily for defender
+        $(assailantHpLost).fadeIn(hpFade).delay(hpFade).fadeOut(hpFade); // show temporarily for assailant
     }
-    
-    // Appliquer les dégâts et définir la suite
 
-    setTimeout(function () {
+    // Update hp and player stats
 
-        players[1 - turn].hp -= assailantDamages; // réduire la vie du défenseur des dommages de l'aissaillant 
-        if (players[1 - turn].hp <= 0) { // SI le défenseur n'a plus de vie
-            players[1 - turn].hp = 0; // mettre la vie à 0
-            console.log("Le joueur " + (1 - turn + 1) + " est mort ! Le joueur " + (turn + 1) + " a gagné !"); // afficher l'information dans la console
-            informations("Le joueur " + (1 - turn + 1) + " est mort ! Le joueur " + (turn + 1) + " a gagné !", "#e06666"); // afficher les informations dans le panneau
-            endGame(turn); // lancer la fonction de fin de partie
-        } else {
-            console.log("Le joueur " + (1 - turn + 1) + " a perdu " + assailantDamages + " points de vie."); // afficher l'information dans la console
-            informations("Le joueur " + (1 - turn + 1) + " a perdu " + assailantDamages + " points de vie.", "#e06666"); // afficher les informations dans le panneau
-            players[turn].hp -= defenderDamages; // réduire la vie de l'aissaillant des dommages du défenseur
-            if (players[turn].hp <= 0) { // SI l'assailant n'a plus de vie
-                players[turn].hp = 0; // mettre la vie à 0
-                console.log("Le joueur " + (turn + 1) + " est mort ! Le joueur " + (1 - turn + 1) + " a gagné !"); // afficher l'information dans la console
-                informations("Le joueur " + (turn + 1) + " est mort ! Le joueur " + (1 - turn + 1) + " a gagné !", "#e06666"); // afficher les informations dans le panneau
+    setTimeout(function () { // use setTimeout to delay the function
+
+        players[1 - turn].hp -= assailantDamages; // reduce defender hp by assailant damages
+        if (players[1 - turn].hp <= 0) { // IF defender life is below zero
+            players[1 - turn].hp = 0; // set hp to zero
+            info("Le joueur " + (1 - turn + 1) + " est mort ! Le joueur " + (turn + 1) + " a gagné !", "#e06666"); // show info in panel
+            endGame(turn); // end game
+        } else { // ELSE
+            info("Le joueur " + (1 - turn + 1) + " a perdu " + assailantDamages + " points de vie.", "#e06666"); // show info in panel
+            players[turn].hp -= defenderDamages; // reduce assailant hp by defender damages
+            if (players[turn].hp <= 0) { // IF assailant life is below zero
+                players[turn].hp = 0; // set hp to zero
+                info("Le joueur " + (turn + 1) + " est mort ! Le joueur " + (1 - turn + 1) + " a gagné !", "#e06666"); // show info in panel
                 endGame(1 - turn); // lancer la fonction de fin de partie
-            } else { // SINON
-                console.log("Le joueur " + (turn + 1) + " a perdu " + defenderDamages + " points de vie."); // afficher l'information dans la console
-                informations("Le joueur " + (turn + 1) + " a perdu " + defenderDamages + " points de vie.", "#e06666"); // afficher les informations dans le panneau
-                $("#fight-mask").hide(); // cacher le masque
-                turn = 1 - turn; // changer le joueur (0 donne 1 et 1 donne 0)
-                newRound(turn); // démarrer un nouveau tour
+            } else { // ELSE
+                info("Le joueur " + (turn + 1) + " a perdu " + defenderDamages + " points de vie.", "#e06666"); // show info in panel
+                $("#fight-mask").hide(); // hide mask
+                turn = 1 - turn; // change player turn
+                newRound(turn); // run a new turn
             }
         }
 
-        $("#player" + (1 - turn + 1) + " .player-hp").text(players[1 - turn].hp); // mettre à jour les statistiques
-        $("#player" + (turn + 1) + " .player-hp").text(players[turn].hp); // mettre à jour les statistiques
-        $("#player" + (1 - turn + 1) + " .player-hp-bar").css("width", (players[1 - turn].hp / 20 * 128) + "px"); // mettre à jour la barre de vie
-        $("#player" + (turn + 1) + " .player-hp-bar").css("width", (players[turn].hp / 20 * 128) + "px"); // mettre à jour la barre de vie
+        $("#player" + (1 - turn + 1) + " .player-hp").text(players[1 - turn].hp); // update hp stats in player pannel
+        $("#player" + (turn + 1) + " .player-hp").text(players[turn].hp); // "
+        $("#player" + (1 - turn + 1) + " .player-hp-bar").css("width", (players[1 - turn].hp / 20 * 128) + "px"); // update hp bar in player pannel
+        $("#player" + (turn + 1) + " .player-hp-bar").css("width", (players[turn].hp / 20 * 128) + "px"); // "
 
     }, hpFade * 3);
 
 }
 
-// [Fonction] Affichage de l'écran de fin
+// [FUNCTION] SHOW END SCREEN
 
 function endGame(player) {
 
-    // Masquer le plateau avec le masque
-    
+    // Show mask
+
     $("#end-mask").show();
-    
-    // Mettre à jour les éléments
-    
+
+    // Update info
+
     $("#winner-img").css("background-color", colors[player]);
     $("#winner-img").css("background-image", "url('img/player" + (player + 1) + ".png')")
     $("#winner-player").text("Le joueur " + (player + 1) + " a vaincu !")

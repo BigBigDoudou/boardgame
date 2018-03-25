@@ -1,14 +1,15 @@
-// MISE EN ATTENTE
+// SLEEPING
 
-// [Fonction] Création d'un délai d'attente
+// [FUNCTION] SLEEP
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms)); // renvoyer l'état résolue pour la promesse
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// PRÉVENTION DES APPELS RÉPÉTÉS D'UNE FONCTION
+// PREVENT REPEATED CALLS
 
-// Cette fonction limite le nombre d'appels d'une fonction (pendant le temps indiqué dans le paramètre "wait"). Elle permet d'éviter la surcharge lorsqu'une fonction serait appelée trop de fois en peu de temps sans qu'une mise à jour instantannée soit nécessaire. Importée de Github : https://gist.github.com/nmsdvid/8807205. Créée par David Nemes (nmsdvid).
+// This function limits function calls. It is usefull if a function can be called a lot of time in few ms.
+// This function has been imported from Github - https://gist.github.com/nmsdvid/8807205 - and is created by David Nemes (nmsdvid).
 
 function debounce(func, wait, immediate) {
     var timeout;
@@ -24,84 +25,67 @@ function debounce(func, wait, immediate) {
     };
 }
 
-// IDENTIFICATION DES CASES ENTOURANT UNE POSITION
+// FINDING POSITIONS SURROUNDING A POSITION
 
-// [Fonction] Identification des cases entourant une position
+// [FUNCTION] GET POSITIONS SURROUNDING A POSITION
 
-function findSurroundingSquares(position) { // PARAMÈTRES : position
+function findSurroundingPositions(position) { // PARAMETERS : position
 
-    // Ordre des cases : haut-gauche, haut, haut-droite, gauche, droite, bas-gauche, bas, bas-droite
+    // Order : top-lef, top, top-right, left, right, bottom-left, bottom, bottom-right
 
     // 0 1 2
     // 3 P 4
     // 5 6 7
 
-    var surrounds = []; // tableau contenant les cases autour d'une position donnée
+    var surrounds = []; // array to return
 
-    // TOP-LEFT (0)
-
-    if ((position > 9) && (position % 10 > 0)) { // SI la position est sur la deuxième ligne ou plus et sur la deuxième colonne ou plus
-        surrounds.push(position - 10 - 1); // ajouter la position un cran au-dessus et un cran à gauche
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
+    if ((position > 9) && (position % 10 > 0)) { // IF tested position is on second row or more and second column or more
+        surrounds.push(position - 10 - 1); // push top-left position to array
+    }else{ // ELSE
+        surrounds.push(null); // push "null" to array
     }
 
-    // TOP (1)
-
-    if (position > 9) { // SI la position est sur la deuxième ligne ou plus
-        surrounds.push(position - 10); // ajouter la position un cran au-dessus
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
+    if (position > 9) { // IF tested position is on second row or more
+        surrounds.push(position - 10); // push top position
+    }else{ // "
+        surrounds.push(null); // "
     }
 
-    // TOP-RIGHT (2)
-
-    if ((position > 9) && (position % 10 < 9)) { // SI la position est sur la deuxième ligne ou plus et sur la huitième colonne ou moins
-        surrounds.push(position - 10 + 1); // ajouter la position un cran au-dessus et un cran à droite
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
+    if ((position > 9) && (position % 10 < 9)) { // IF tested position is on second row or more and heights column or less
+        surrounds.push(position - 10 + 1); // push top-right position
+    }else{ // "
+        surrounds.push(null); // "
     }
 
-    // LEFT (3)
-
-    if (position % 10 > 0) { // SI la position est sur la deuxième colonne ou plus
-        surrounds.push(position - 1); // ajouter la position un cran à gauche
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
+    if (position % 10 > 0) { // IF tested position is on second column or more
+        surrounds.push(position - 1); // push left position
+    }else{ // "
+        surrounds.push(null); // "
+    }
+    if (position % 10 < 9) { // IF tested position is on heights column or less
+        surrounds.push(position + 1); // push right position
+    }else{ // "
+        surrounds.push(null); // "
+    }
+    
+    if ((position < 90) && (position % 10 > 0)) { // IF tested position is on heights row or less and second column or more
+        surrounds.push(position + 10 - 1); // push bottom-left position
+    }else{ // "
+        surrounds.push(null); // "
+    }
+    
+    if (position < 90) { // IF tested position is on heights row or less
+        surrounds.push(position + 10); // push bottom position
+    }else{ // "
+        surrounds.push(null); // "
     }
 
-    // RIGHT (4)
-
-    if (position % 10 < 9) { // SI la position est sur la huitième colonne ou moins
-        surrounds.push(position + 1); // ajouter la position un cran à droite
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
+    if ((position < 90) && (position % 10 < 9)) { // IF tested position is on heights row or less and heights column or less
+        surrounds.push(position + 10 + 1); // push bottom-right position
+    }else{ // "
+        surrounds.push(null); // "
     }
 
-    // BOTTOM-LEFT (5)
-
-    if ((position < 90) && (position % 10 > 0)) { // SI la position est sur la huitième ligne ou moins et sur la deuxième colonne ou plus
-        surrounds.push(position + 10 - 1); // ajouter la position un cran en-dessous et un cran à gauche
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
-    }
-
-    // BOTTOM (6)
-
-    if (position < 90) { // SI la position est sur la huitième ligne ou moins
-        surrounds.push(position + 10); // ajouter la position un cran en-dessous
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
-    }
-
-    // BOTTOM-RIGHT (7)
-
-    if ((position < 90) && (position % 10 < 9)) { // SI la position est sur la huitième ligne ou moins et sur la huitième colonne ou moins
-        surrounds.push(position + 10 + 1); // ajouter la position un cran en-dessous et un cran à droite
-    }else{ // SINON
-        surrounds.push(null); // ajouter la valeur "null"
-    }
-
-    return surrounds; // renvoyer le tableau des cases entourant la position
+    return surrounds; // return array
 
 }

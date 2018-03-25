@@ -1,180 +1,180 @@
-// CRÉATION DES OBJETS COMPOSANT LE JEU
+// BOARD GENERATION
 
-// [Fonction] Création des cases
+// [FUNCION] CREATE ARRAYS FOR AVAILABLE POSITIONS
+
+function generateAvailablePositions(size) {
+
+    for (var i = 0; i < size; i++) { // FOR size of the board
+        availablePositionsForObstacles.push(i); // add available position for obstacles
+        availablePositionsForWeapons.push(i); // add available position for weapons
+        availablePositionsForShields.push(i); // add available position for shields
+    }
+}
+
+// [FUNCION] GENERATE SQUARES
 
 function generateSquares(size) {
 
-    for (var i = 0; i < size; i++) { // POUR la taille du plateau
-        var square = Object.create(Square); // créer un objet
-        square.initSquare("SQ" + i, i); // appliquer les propriétés (number, position)
-        squares.push(square); // intégrer dans le tableau dédié
+    for (var i = 0; i < size; i++) { // FOR size of the board
+        var square = Object.create(Square); // create object
+        square.initSquare("SQ" + i, i); // apply properties
+        squares.push(square); // push in array
     }
 }
 
-// [Fonction] Création des tableaux de cases attribuables
-
-function generateRemainings() {
-
-    for (var i = 0; i < squares.length; i++) { // POUR la taille du plateau
-        remainingsObstacles.push(i); // définir les cases attribuables pour les obstacles
-        remainingsWeapons.push(i) // définir les cases attribuables pour les armes
-        remainingsShields.push(i); // définir les cases attribuables pour les boucliers
-    }
-}
-
-// [Fonction] Création des joueurs
+// [FUNCION] GENERATE PLAYERS
 
 function generatePlayers() {
 
-    for (var i = 0; i < 2; i++) { // POUR le nombre de joueurs
-        var player = Object.create(Player); // créer un objet
-        var playerPosition = initPlayersPosition[i]; // définir la position
-        player.initPlayer("PL" + i, playerPosition); // appliquer les propriétés (number, position)
-        players.push(player); // intégrer dans le tableau dédié
-        squares[playerPosition].player = 1; // définir la propriété à 1
+    for (var i = 0; i < 2; i++) { // FOR number of players
+        var player = Object.create(Player); // create object
+        var playerPosition = initPlayersPosition[i]; // set position
+        player.initPlayer("PL" + i, playerPosition); // apply properties
+        players.push(player); // push in array
+        squares[playerPosition].player = 1; // define dedicated square property to 1
     }
 }
 
-// [Fonction] Création des obstacles
+// [FUNCION] GENERATE OBSTACLES
 
 function generateObstacles(quantity) {
 
-    for (var i = 0; i < quantity; i++) { // POUR le nombre d'obstacles
-        var obstacle = Object.create(Obstacle); // créer un objet
-        var obstaclePosition = elementsPosition(remainingsObstacles); // définir la position
-        obstacle.initObstacle("OB" + i, obstaclePosition); // appliquer les propriétés (number, position)
-        obstacles.push(obstacle); // intégrer dans le tableau dédié
-        squares[obstaclePosition].obstacle = 1; // définir la propriété à 1
-        removeFromRemainings(remainingsObstacles, obstaclePosition, 1); // supprimer la position attribuée des positions attribuables
+    for (var i = 0; i < quantity; i++) { // FOR number of obstacles
+        var obstacle = Object.create(Obstacle); // create object
+        var obstaclePosition = elementsPosition(availablePositionsForObstacles); // set random position
+        obstacle.initObstacle("OB" + i, obstaclePosition); // apply properties
+        obstacles.push(obstacle); // push in array
+        squares[obstaclePosition].obstacle = 1; // define dedicated square property to 1
+        removeFromAvailablePositions(availablePositionsForObstacles, obstaclePosition, 1); // delete position (and surroundings) value to available positions
     }
 }
 
-// [Fonction] Création des armes
+// [FUNCION] GENERATE WEAPONS
 
 function generateWeapons(quantity) {
 
-    for (var i = 0; i < quantity; i++) { // POUR le nombre d'armes
-        var weapon = Object.create(Weapon); // créer un objet
-        var weaponName = weaponsNames[i]; // récupérer le nom de l'arme dans le tableau
-        var weaponPosition = elementsPosition(remainingsWeapons); // définir la position
-        var weaponLevel = Math.floor(Math.random() * 3) + 5; // définir l'attaque aléatoirement
-        weapon.initWeapon("WE" + i, weaponName, weaponPosition, weaponLevel); // appliquer les propriétés (number, nom, position, attaque)
-        weapons.push(weapon); // intégrer dans le tableau dédié
-        squares[weaponPosition].weapon = 1; // définir la propriété à 1
-        removeFromRemainings(remainingsWeapons, weaponPosition, 1); // supprimer la position attribuée des positions attribuables
+    for (var i = 0; i < quantity; i++) { // FOR number of weapons
+        var weapon = Object.create(Weapon); // create object
+        var weaponName = weaponsNames[i]; // set name property from names array
+        var weaponPosition = elementsPosition(availablePositionsForWeapons); // set random position
+        var weaponLevel = Math.floor(Math.random() * 3) + 5; // set random attack
+        weapon.initWeapon("WE" + i, weaponName, weaponPosition, weaponLevel); // apply properties
+        weapons.push(weapon); // push in array
+        squares[weaponPosition].weapon = 1; // define dedicated square property to 1
+        removeFromAvailablePositions(availablePositionsForWeapons, weaponPosition, 1); // delete position (and surroundings) value to available positions
     }
 }
 
-// [Fonction] Création des boucliers
+// [FUNCION] GENERATE SHIELDS
 
 function generateShields(quantity) {
 
-    for (var i = 0; i < quantity; i++) { // POUR le nombre de boucliers
-        var shield = Object.create(Shield); // créer un objet
-        var shieldName = shieldsNames[i]; // récupérer le nom du bouclier dans le tableau
-        var shieldPosition = elementsPosition(remainingsShields); // définir la position
-        var shieldLevel = Math.floor(Math.random() * 3) + 2; // définir la défense aléatoirement
-        shield.initShield("SH" + i, shieldName, shieldPosition, shieldLevel); // appliquer les propriétés (number, nom, position, défense)
-        shields.push(shield); // intégrer dans le tableau dédié
-        squares[shieldPosition].shield = 1; // définir la propriété à 1
-        removeFromRemainings(remainingsShields, shieldPosition, 1); // supprimer la position attribuée des positions attribuables
+    for (var i = 0; i < quantity; i++) { // FOR number of shields
+        var shield = Object.create(Shield); // create object
+        var shieldName = shieldsNames[i]; // set name property from names array
+        var shieldPosition = elementsPosition(availablePositionsForShields); // set random position
+        var shieldLevel = Math.floor(Math.random() * 3) + 2; // set random defense
+        shield.initShield("SH" + i, shieldName, shieldPosition, shieldLevel); // apply properties
+        shields.push(shield); // push in array
+        squares[shieldPosition].shield = 1; // define dedicated square property to 1
+        removeFromAvailablePositions(availablePositionsForShields, shieldPosition, 1); // delete position (and surroundings) value to available positions
     }
 }
 
-// POSITIONNEMENT DES ÉLÉMENTS SUR LE PLATEAU
+// POSITIONNING CONTROL
 
-// [Fonction] Suppression des cases attribuables
+// [FUNCTION] REMOVE AVAILABLE POSITIONS
 
-function removeFromRemainings(array, position, range) { // PARAMÈTRES : tableaux des cases attribuables pour l'objet à positionner, position de l'objet, distance de suppression
+function removeFromAvailablePositions(array, position, range) { // PARAMETERS : available positions array, position, deleting range
 
-    var indexObstacles = remainingsObstacles.indexOf(position); // récupérer l'index dans le tableau de la valeur indiquée par le paramètre "position"
-    var indexWeapons = remainingsWeapons.indexOf(position); // récupérer l'index dans le tableau de la valeur indiquée par le paramètre "position"
-    var indexShields = remainingsShields.indexOf(position); // récupérer l'index dans le tableau de la valeur indiquée par le paramètre "position"
+    var indexObstacles = availablePositionsForObstacles.indexOf(position); // get index of position value in array
+    var indexWeapons = availablePositionsForWeapons.indexOf(position); // ""
+    var indexShields = availablePositionsForShields.indexOf(position); // ""
 
-    if (indexObstacles !== -1) { // SI la valeur est différente de -1 (valeur non trouvée avec indexOf donc inexistante dans le tableau de cases attribuables)
-        remainingsObstacles.splice(indexObstacles, 1); // supprimer la valeur dans le tableau des cases attribuables
+    if (indexObstacles !== -1) { // IF value is not -1 (value not found with indexOf)
+        availablePositionsForObstacles.splice(indexObstacles, 1); // remove value from available positions
     };
 
-    if (indexWeapons !== -1) { // SI la valeur est différente de -1 (valeur non trouvée avec indexOf donc inexistante dans le tableau de cases attribuables)
-        remainingsWeapons.splice(indexWeapons, 1); // supprimer la valeur dans le tableau des cases attribuables
+    if (indexWeapons !== -1) { // "
+        availablePositionsForWeapons.splice(indexWeapons, 1); // "
     };
 
-    if (indexShields !== -1) { // SI la valeur est différente de -1 (valeur non trouvée avec indexOf donc inexistante dans le tableau de cases attribuables)
-        remainingsShields.splice(indexShields, 1); // supprimer la valeur dans le tableau des cases attribuables
+    if (indexShields !== -1) { // "
+        availablePositionsForShields.splice(indexShields, 1); // "
     };
 
-    var surrounds = findSurroundingSquares(position); // récupérer les positions des cases entourant la position entrée en paramètre
-    if (range === 1) { // SI le paramètre "range" est 1 (= il faut supprimer les cases entourant la position)
-        for (var i = 0; i < surrounds.length; i++) { // POUR chaque case entourant la position
-            var index = array.indexOf(surrounds[i]); // récupérer l'index dans le tableau de la valeur de la case
-            if (index !== -1) { // SI la valeur est différente de -1 (valeur non trouvée avec indexOf donc inexistante dans le tableau de cases attribuables)
-                array.splice(index, 1); // supprimer la valeur dans le tableau des cases attribuables entré en paramètre
+    var surrounds = findSurroundingPositions(position); // define positions surrouding actual position
+    if (range === 1) { // IF range is 1 (= delete 1 case around from available positions)
+        for (var i = 0; i < surrounds.length; i++) { // FOR each surrounding position
+            var index = array.indexOf(surrounds[i]); // get index of position value in array
+            if (index !== -1) { // "
+                array.splice(index, 1); // "
             }
         }
     }
 
 }
 
-// [Fonction] Suppression initiale de cases attribuables
+// [FUNCTION] INITIALE REMOVE AVAILABLE POSITIONS
 
-function initRemoveFromRemainings() {
+function initRemoveFromAvailablePositions() {
 
-    for (var i = 0; i < initPlayersPosition.length; i++) { // POUR chaque joueur
+    for (var i = 0; i < initPlayersPosition.length; i++) { // FOR each player
 
-        removeFromRemainings(remainingsObstacles, initPlayersPosition[i], 1); // supprimer la valeur de la case où est positionné le joueur et des cases alentours du tableau des cases attribuables pour les obstacles
-        removeFromRemainings(remainingsWeapons, initPlayersPosition[i], 1); // supprimer la valeur de la case où est positionné le joueur et des cases alentours du tableau des cases attribuables pour les armes
-        removeFromRemainings(remainingsShields, initPlayersPosition[i], 1); // supprimer la valeur de la case où est positionné le joueur et des cases alentours du tableau des cases attribuables pour les boucliers
+        removeFromAvailablePositions(availablePositionsForObstacles, initPlayersPosition[i], 1); // remove player position from available positions for obstacles
+        removeFromAvailablePositions(availablePositionsForWeapons, initPlayersPosition[i], 1); // "
+        removeFromAvailablePositions(availablePositionsForShields, initPlayersPosition[i], 1); // "
 
-        var initReachableSquares = findReachableSquares(i, initPlayersPosition[i]); // identifier les cases accessibles par le joueur
+        var initReachablePositions = findReachablePositions(i, initPlayersPosition[i]); // define positions that player can reach
 
-        for (var j = 0; j < initReachableSquares.length; j++) { // POUR chaque case accessible par le joueur
-            removeFromRemainings(remainingsWeapons, initReachableSquares[j].position, 0); // supprimer la valeur de la case du tableau des cases attribuables pour les armes
-            removeFromRemainings(remainingsShields, initReachableSquares[j].position, 0); // supprimer la valeur de la case du tableau des cases attribuables pour les boucliers
+        for (var j = 0; j < initReachablePositions.length; j++) { // FOR each reachable position
+            removeFromAvailablePositions(availablePositionsForWeapons, initReachablePositions[j].position, 0); // remove position from available positions for weapons
+            removeFromAvailablePositions(availablePositionsForShields, initReachablePositions[j].position, 0); // "
         }
 
     }
 }
 
-// [Fonction] Positionnement des objets
+// [FUNCTION] SET RANDOM POSITIONS
 
-function elementsPosition(array) { // PARAMÈTRES : tableaux des cases attribuables pour l'objet à positionner
+function elementsPosition(array) { // PARAMETERS : array of available positions
 
-    var pick = array[Math.floor(Math.random() * array.length)]; // sélectionner une valeur aléatoire dans le tableau des cases attribuables de l'objet concerné
+    var pick = array[Math.floor(Math.random() * array.length)]; // pick a random value in the array
 
-    return pick; // renvoyer la valeur choisie
+    return pick; // return picked value
 }
 
-// INTÉGRATION DES OBJETS DANS LE DOM
+// INTCORPORATION OF OBJECTS IN DOM
 
-// [Fonction] Création des éléments du DOM
+// [FUNCTION] CREATE ELEMENTS
 
 async function draw(array, object, delay) {
 
-    var eltName = object;
-    var id = object.substring(0, 2).toUpperCase(); // l'ID d'un élément correspond aux deux premières lettres, en majuscules (suivies d'un chiffre)
+    var eltName = object; // create a variable to element
+    var idRoot = object.substring(0, 2).toUpperCase(); // create a variable to define id root (= two first letters in uppercase)
 
-    for (var i = 0; i < array.length; i++) { // POUR chacun des objets
-        elt = document.createElement(eltName) // créer une balise correspondante
-        $(elt).attr("id", id + i); // appliquer un ID automatique
-        $(elt).addClass(eltName); // ajouter la classe correspondante
-        $(elt).hide(); // masquer l'élément
+    for (var i = 0; i < array.length; i++) { // FOR each element
+        elt = document.createElement(eltName) // create an element in DOM
+        $(elt).attr("id", idRoot + i); // apply automatic id
+        $(elt).addClass(eltName); // add class
+        $(elt).hide(); // hide element
 
-        if (object === "player" || object === "weapon" || object === "shield") { // SI il s'agit d'un de ces objets
-            $(elt).css("background-image", "url('img/" + object + (i + 1) + ".png')"); // ajouter l'image correspondante
+        if (object === "player" || object === "weapon" || object === "shield") { // IF element is player, weapon or shield
+            $(elt).css("background-image", "url('img/" + object + (i + 1) + ".png')"); // add image
         }
 
-        if (object === "square") { // SI il s'agit d'un objet Square
-            $("#board-elts").append(elt); // intégrer l'élément dans l'élément portant l'ID "board"
+        if (object === "square") { // IF element is square
+            $("#board-elts").append(elt); // incorporate element in board
 
-        } else { // SINON
-            $("#SQ" + array[i].position).append(elt); // intégrer l'élément dans l'élément "square" dont l'ID correspond à la position de l'élément
+        } else { // ELSE
+            $("#SQ" + array[i].position).append(elt); // incorporate element in related square (got by id)
         }
 
-        if (delay === 1) {
-            $(elt).fadeIn();
-            await sleep(25);
-        } else {
-            $(elt).show();
+        if (delay === 1) { // IF delay parameter is set to 1
+            $(elt).fadeIn(); // show element with a fadeI,
+            await sleep(25); // wait between each element incorporation
+        } else { // ELSE
+            $(elt).show(); // show element instantly
         }
 
     }
