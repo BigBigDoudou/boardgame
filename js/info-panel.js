@@ -24,11 +24,11 @@ function info(info, color) { // PARAMETERS : info to show, <p> color
 
 function infoToggle() {
 
-    if (infoBoard === "open") { // IF the panel is open
+    if (infoPanel === "open") { // IF the panel is open
 
         infoClose(); // run function to hide the panel
 
-    } else if (infoBoard === "close") { // IF the panel is closed
+    } else if (infoPanel === "close") { // IF the panel is closed
 
         infoOpen(); // run function to open the panel
 
@@ -39,53 +39,27 @@ function infoToggle() {
 // [FUNCTION] HIDE PANEL
 
 function infoClose() {
-
-    // Set CSS properties
     
-    $("#info").css({
-        'width': '40px',
-        'padding': '40px 10px'
-    });
+    $("#info-panel").hide();
 
-    $("#info > p > span:first-child").hide();
-    $("#info-logs").hide();
-    $("#info > hr").hide();
-
-    $("#info-toggle").css({
+    $("#info-toggle-icon").css({
         'background-image': 'url(./img/menu-toggle-right.png)'
     });
-
-    $("#global-wrapper").css({
-        'margin-left': '60px'
-    });
     
-    infoBoard = "close"; // change value of variable
+    infoPanel = "close"; // change value of variable
 }
 
 // [FUNCTION] SHOW PANEL
 
 function infoOpen() {
     
-    // Set CSS properties
+    $("#info-panel").show();
 
-    $("#info").css({
-        'width': '250px',
-        'padding': '40px 20px'
-    });
-
-    $("#info > p > span:first-child").show();
-    $("#info-logs").show();
-    $("#info > hr").show();
-
-    $("#info-toggle").css({
+    $("#info-toggle-icon").css({
         'background-image': 'url(./img/menu-toggle-left.png)'
     });
 
-    $("#global-wrapper").css({
-        'margin-left': '270px'
-    });
-
-    infoBoard = "open"; // change value of variable
+    infoPanel = "open"; // change value of variable
 }
 
 // ADD AN ONCLICK FUNCTION TO TOGGLE BUTTON

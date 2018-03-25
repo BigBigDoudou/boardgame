@@ -49,7 +49,7 @@ function newGame() {
     // Set stats to default
 
     $(".player-hp").text("20");
-    $(".player-hp-bar").css("width", "128px");
+    $(".player-hp-bar").css("width", "100px");
     $(".player-weapon-img").attr("src", "img/weapon0.png");
     $(".player-shield-img").attr("src", "img/shield0.png")
     $(".player-weapon-attack").text("1");

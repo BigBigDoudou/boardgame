@@ -138,24 +138,32 @@
 
     </div>
 
-    <!-- INFO PANEL -->
+    <div id="wrapper">
 
-    <div id="info">
-        <p>
-            <span>Informations de jeu</span>
-            <span id="info-toggle"></span>
-        </p>
-        <hr>
-        <div id="info-logs"></div>
-    </div>
+        <!-- INFO PANEL -->
 
-    <!-- GAME WRAPPER -->
+        <div id="info-panel">
 
-    <div id="game-wrapper">
+            <div id="info">
+                <p>
+                    <span>Informations de jeu</span>
+                </p>
+                <hr>
+                <div id="info-logs"></div>
+            </div>
 
-        <!-- PLAYER 1 PANEL -->
+        </div>
+        
+        <!-- INFO PANEL -->
+        
+        <div id="info-toggle">
+            <div id="info-toggle-icon"></div>
+        </div>
+
+        <!-- PLAYER 1 -->
 
         <div id="player1">
+
             <img class="player-img" src="img/player1.png" title="Joueur 1" alt="Icône du joueur 1">
             <div class="player-hp-wrapper">
                 <div class="player-hp">20</div>
@@ -175,9 +183,10 @@
 
         </div>
 
-        <!-- PLAYER 2 PANEL -->
+        <!-- PLAYER 2 -->
 
         <div id="player2">
+
             <img class="player-img" src="img/player2.png" title="Joueur 2" alt="Icône du joueur 2">
             <div class="player-hp-wrapper">
                 <div class="player-hp">20</div>
@@ -194,28 +203,27 @@
                     <p class="player-shield-defense">1</p>
                 </div>
             </div>
+
         </div>
 
         <!-- BOARD -->
 
         <div id="board-wrapper">
 
-            <div id="board-container">
-                <div id="board">
-                    <mask id="fight-mask"></mask>
-                    <mask id="end-mask">
-                        <div id="winner-img"></div>
-                        <p id="winner-player"></p>
-                        <button id="new-game">Rejouer</button>
-                    </mask>
-                    <div id="round"></div>
-                    <div id="board-elts"></div>
-                </div>
+            <div id="board">
+                <mask id="fight-mask"></mask>
+                <mask id="end-mask">
+                    <div id="winner-img"></div>
+                    <p id="winner-player"></p>
+                    <button id="new-game">Rejouer</button>
+                </mask>
+                <div id="round"></div>
+                <div id="board-elts"></div>
             </div>
-
         </div>
 
     </div>
+
 
     <!-- SWITCH ICONS CONTAINER -->
 
@@ -229,7 +237,7 @@
 
     <script src="js/tools.js"></script>
     <script src="js/variables.js"></script>
-    <script src="js/informations.js"></script>
+    <script src="js/info-panel.js"></script>
     <script src="js/generate-board.js"></script>
     <script src="js/move-to-position.js"></script>
     <script src="js/switch-item.js"></script>

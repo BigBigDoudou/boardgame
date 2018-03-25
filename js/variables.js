@@ -31,7 +31,7 @@ var turn = 0;
 var moving = 0;
 var reachSurrounds = [];
 var reachFight;
-var infoBoard = "open";
+var infoPanel = "open";
 var infoLines = 0;
 var moveFade = 150;
 var switchFade = 750;

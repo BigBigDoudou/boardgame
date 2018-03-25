@@ -387,8 +387,8 @@ function chooseAction(action) {
 
         $("#player" + (1 - turn + 1) + " .player-hp").text(players[1 - turn].hp); // update hp stats in player pannel
         $("#player" + (turn + 1) + " .player-hp").text(players[turn].hp); // "
-        $("#player" + (1 - turn + 1) + " .player-hp-bar").css("width", (players[1 - turn].hp / 20 * 128) + "px"); // update hp bar in player pannel
-        $("#player" + (turn + 1) + " .player-hp-bar").css("width", (players[turn].hp / 20 * 128) + "px"); // "
+        $("#player" + (1 - turn + 1) + " .player-hp-bar").css("width", (players[1 - turn].hp / 20 * 100) + "px"); // update hp bar in player pannel
+        $("#player" + (turn + 1) + " .player-hp-bar").css("width", (players[turn].hp / 20 * 100) + "px"); // "
 
     }, hpFade * 3);
 

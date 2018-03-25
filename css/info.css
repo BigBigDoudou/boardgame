@@ -1,48 +1,22 @@
 /* 
 
-    #info : panel showing info about the game
     #info > span : panel title
     #info > hr : horizontal line under panel title
-    #info-toggle : toggle button to show/hide the panel
     #info-logs p : info in the panel
 
 */
-
-#info {
-    position: fixed;
-    top: 20px;
-    bottom: 20px;
-    width: 250px;
-    padding: 40px 20px;
-    background-color: rgba(25, 25, 25, 1);
-    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5) inset;
-}
 
 #info > span {
     display: inline-block;
     float: left;
     line-height: 20px;
     font-size: 1em;
-    color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220);
 }
 
 #info > hr {
     margin-top: 10px;
     margin-bottom: 20px;
-}
-
-#info-toggle {
-    display: inline-block;
-    float: right;
-    width: 20px;
-    height: 20px;
-    background-image: url(../img/menu-toggle-left.png);
-    background-size: 15px 15px;
-    cursor: pointer;
-}
-
-#info-toggle:hover {
-    background-size: 20px 20px;
 }
 
 #info-logs p {
