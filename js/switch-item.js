@@ -42,8 +42,8 @@ function switchItem(player, position, type) { // PARAMÈTRES : joueur, position 
                 $("#switch").css("background-image", "url('img/switch-arrow.png')");
                 $("#switch-before").css("background-image", "url('img/" + type + (itemBefore + 1) + ".png')");
                 $("#switch-after").css("background-image", "url('img/" + type + (itemAfter + 1) + ".png')");
-                $("#switch-before").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher pendant 500ms puis masquer
-                $("#switch-after").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher pendant 500ms puis masquer
+                $("#switch-before").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
+                $("#switch-after").fadeIn(switchFade).delay(switchFade * 0.8).fadeOut(switchFade); // afficher puis masquer
             } else { // SI le joueur ne possédait pas d'équipement auparavant
                 $("#switch").css("background-image", "url('img/" + type + (itemAfter + 1) + ".png')");
             }
