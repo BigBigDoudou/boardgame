@@ -9,10 +9,6 @@ $(window).on("load", function () {
     $("#end-mask").hide();
     $("#fight-mask").hide();
     $("#round").hide();
-    $("#switch-arrow").hide();
-    $("#switch").hide();
-    $("#switch-before").hide();
-    $("#switch-after").hide();
 
     // Si la largeur de fenêtre est inférieure à 1400px, fermer le panneau latéral
     

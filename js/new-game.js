@@ -3,7 +3,7 @@
 function newGame() {
 
     console.log("*** NEW GAME ***");
-    
+
     // Mettre les variable à 0 et vider les tableaux
 
     round = 0;
@@ -21,16 +21,35 @@ function newGame() {
     // Vider les conteneurs et supprimer les éléments
 
     $("#board-elts").empty();
+    $("#switch-container").empty();
     $("#informations-logs").empty();
     infoLines = 0;
 
     // Masquer les éléments
 
     $("#fight-mask").hide();
-    $("#switch-arrow").hide();
-    $("#switch").hide();
-    $("#switch-before").hide();
-    $("#switch-after").hide();
+
+    // Créer les icônes
+
+    var switchArrowElt = document.createElement("switch");
+    var switchElt = document.createElement("switch");
+    var switchBeforeElt = document.createElement("switch");
+    var switchAfterElt = document.createElement("switch");
+
+    $(switchArrowElt).attr("id", "switch-arrow");
+    $(switchElt).attr("id", "switch");
+    $(switchBeforeElt).attr("id", "switch-before");
+    $(switchAfterElt).attr("id", "switch-after");
+
+    $("#switch-container").append(switchArrowElt);
+    $("#switch-container").append(switchElt);
+    $("#switch-container").append(switchBeforeElt);
+    $("#switch-container").append(switchAfterElt);
+
+    $(switchArrowElt).hide();
+    $(switchElt).hide();
+    $(switchBeforeElt).hide();
+    $(switchAfterElt).hide();
 
     // Mettre les statistiques initiales
 
@@ -56,7 +75,6 @@ function newGame() {
     draw(squares, "square", 0);
     draw(players, "player", 0);
     draw(obstacles, "obstacle", 0);
-
 
     // Montrer le plateau
 
