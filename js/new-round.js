@@ -15,7 +15,7 @@ function newRound(turn) { // PARAMÈTRES : tour (joueur entrain de jouer)
         $("#SQ" + (players[i].position)).append($("#PL" + i)); // déplacer l'élément du joueur dans l'élément case correspondant
     }
 
-    for (var l = 0; l < reachs; l++) { // POUR chaque objet reach
+    for (var j = 0; j < reachs; j++) { // POUR chaque objet reach
         reachs.fight = 0; // mettre la propriété "fight" à 0
     }
 
@@ -54,7 +54,7 @@ async function repositionItems() {
 
     }
 
-    for (j = 0; j < shields.length; j++) { // POUR chaque objet "shield"
+    for (var j = 0; j < shields.length; j++) { // POUR chaque objet "shield"
 
         if (shields[j].position > 0) { // SI le bouclier est sur le plateau
             $("shield").hide(); // cacher l'élément dans le DOM

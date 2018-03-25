@@ -105,7 +105,7 @@ function removeFromRemainings(array, position, range) { // PARAMÈTRES : tableau
 
     var surrounds = findSurroundingSquares(position); // récupérer les positions des cases entourant la position entrée en paramètre
     if (range === 1) { // SI le paramètre "range" est 1 (= il faut supprimer les cases entourant la position)
-        for (i = 0; i < surrounds.length; i++) { // POUR chaque case entourant la position
+        for (var i = 0; i < surrounds.length; i++) { // POUR chaque case entourant la position
             var index = array.indexOf(surrounds[i]); // récupérer l'index dans le tableau de la valeur de la case
             if (index !== -1) { // SI la valeur est différente de -1 (valeur non trouvée avec indexOf donc inexistante dans le tableau de cases attribuables)
                 array.splice(index, 1); // supprimer la valeur dans le tableau des cases attribuables entré en paramètre

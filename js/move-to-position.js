@@ -193,7 +193,7 @@ async function moveToPosition() { // fonction asynchone permettant d'utiliser à
 
         var fightArea = 0;
 
-        for (i = 0; i < reachs.length; i++) {
+        for (var i = 0; i < reachs.length; i++) {
             if ((reachs[i].position === players[turn].position) && (reachs[i].fight === 1)) {
                 fightArea = 1;
             }
