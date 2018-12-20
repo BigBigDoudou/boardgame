@@ -1,8 +1,12 @@
-> March 2018
-
 # Boardgame
 
-A little game to learn coding... My very first program!
+> A game made with Javascript
+
+> March 2018
+
+**My very first program!**
+
+A little game to learn coding...
 
 You can try it [here](https://bigbigdoudou.github.io/boardgame/).
 
